@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>El Pobre José - Taller Mecánico | Sistema Mantenimiento Vehicular</title>
 
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -14,20 +13,12 @@
                 extend: {
                     colors: {
                         cyber: {
-                            black: '#07080a',
-                            dark: '#0e1117',
-                            card: '#161b22',
-                            border: '#2a3241',
-                            red: '#ff1a3c',
-                            redGlow: '#ff002b',
-                            silver: '#c0c0c0',
-                            silverLight: '#e6e6e6'
+                            black: '#07080a', dark: '#0e1117', card: '#161b22',
+                            border: '#2a3241', red: '#ff1a3c', redGlow: '#ff002b',
+                            silver: '#c0c0c0', silverLight: '#e6e6e6'
                         }
                     },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        tech: ['Orbitron', 'sans-serif']
-                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'], tech: ['Orbitron', 'sans-serif'] },
                     boxShadow: {
                         'neon-red': '0 0 15px rgba(255, 26, 60, 0.6), 0 0 30px rgba(255, 26, 60, 0.2)',
                         'neon-red-lg': '0 0 25px rgba(255, 26, 60, 0.8), 0 0 50px rgba(255, 26, 60, 0.4)'
@@ -37,66 +28,42 @@
         }
     </script>
 
-    <!-- Google Fonts & FontAwesome Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- QR Code Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
-    <!-- ============================================================
-         FIREBASE (base de datos en la nube - sincroniza todos los
-         dispositivos). Usamos la versión "compat" para que funcione
-         con el mismo estilo de código que ya tenías.
-         ============================================================ -->
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
     <style>
         body {
-            background-color: #07080a;
-            color: #e6e6e6;
-            font-family: 'Inter', sans-serif;
+            background-color: #07080a; color: #e6e6e6; font-family: 'Inter', sans-serif;
             background-image:
                 radial-gradient(circle at 50% 0%, rgba(255, 26, 60, 0.15) 0%, transparent 70%),
                 linear-gradient(to bottom, rgba(7, 8, 10, 0.95), rgba(14, 17, 23, 0.98));
             background-attachment: fixed;
         }
-
         .font-tech { font-family: 'Orbitron', sans-serif; }
-
         .chrome-text {
             background: linear-gradient(180deg, #ffffff 0%, #c0c0c0 45%, #707070 50%, #e6e6e6 85%, #ffffff 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8));
         }
-
         .glow-text-red { text-shadow: 0 0 10px #ff1a3c, 0 0 20px #ff1a3c; }
-
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #07080a; }
         ::-webkit-scrollbar-thumb { background: #2a3241; border-radius: 4px; border: 1px solid #ff1a3c; }
         ::-webkit-scrollbar-thumb:hover { background: #ff1a3c; }
-
         .modal-blur { backdrop-filter: blur(8px); }
-
         .spinner {
-            width: 48px; height: 48px;
-            border: 4px solid #2a3241;
-            border-top-color: #ff1a3c;
-            border-radius: 50%;
-            animation: spin 0.9s linear infinite;
-            margin: 0 auto;
+            width: 48px; height: 48px; border: 4px solid #2a3241;
+            border-top-color: #ff1a3c; border-radius: 50%;
+            animation: spin 0.9s linear infinite; margin: 0 auto;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between antialiased selection:bg-cyber-red selection:text-white pb-10">
 
-    <!-- HEADER NAVBAR -->
     <header class="sticky top-0 z-40 bg-cyber-black/90 backdrop-blur-md border-b border-cyber-red/30 shadow-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <!-- Brand Logo & Title -->
             <div class="flex items-center space-x-3 cursor-pointer" onclick="app.handleHomeClick()">
                 <div class="relative w-12 h-12 rounded-full border-2 border-cyber-red p-1 bg-cyber-dark shadow-neon-red flex items-center justify-center overflow-hidden">
                     <svg viewBox="0 0 200 200" class="w-full h-full">
@@ -109,23 +76,18 @@
                     </svg>
                 </div>
                 <div>
-                    <h1 class="font-tech text-lg sm:text-xl font-black tracking-wider chrome-text uppercase leading-none">
-                        EL POBRE JOSÉ
-                    </h1>
+                    <h1 class="font-tech text-lg sm:text-xl font-black tracking-wider chrome-text uppercase leading-none">EL POBRE JOSÉ</h1>
                     <span class="text-xs font-semibold tracking-widest text-cyber-red uppercase glow-text-red block mt-0.5">
                         <i class="fa-solid fa-wrench mr-1"></i> Taller Mecánico
                     </span>
                 </div>
             </div>
 
-            <!-- Controls & Admin Status -->
             <div class="flex items-center space-x-3">
                 <span id="cloudStatus" class="hidden text-[10px] font-tech font-bold px-3 py-1 rounded-full border"></span>
-
                 <span id="adminBadge" class="hidden text-xs font-tech font-bold px-3 py-1 rounded-full bg-cyber-red/20 text-cyber-red border border-cyber-red animate-pulse">
                     <i class="fa-solid fa-user-shield mr-1"></i> PANEL ADMIN
                 </span>
-
                 <button id="authBtn" onclick="app.handleAuthAction()" class="px-4 py-2 text-xs sm:text-sm font-tech font-bold rounded-lg border border-cyber-red/50 bg-gradient-to-r from-cyber-card to-cyber-dark hover:border-cyber-red hover:shadow-neon-red transition-all duration-300 text-white flex items-center space-x-2">
                     <i id="authIcon" class="fa-solid fa-lock"></i>
                     <span id="authText">ACCESO ADMIN</span>
@@ -135,14 +97,11 @@
     </header>
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 flex-grow w-full">
-
-        <!-- ADMIN SEARCH & ACTIONS BAR (Visible only when Admin) -->
         <div id="catalogBar" class="hidden flex-col md:flex-row justify-between items-stretch md:items-center gap-4 mb-8 bg-cyber-card/80 p-4 rounded-xl border border-cyber-border/60 backdrop-blur">
             <div class="relative flex-grow max-w-md">
                 <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
                 <input type="text" id="searchInput" oninput="app.filterVehicles()" placeholder="Buscar por Placa, Cliente o Modelo..." class="w-full pl-10 pr-4 py-2.5 bg-cyber-dark/90 border border-cyber-border rounded-lg text-sm text-white placeholder-gray-500 focus:outline-none focus:border-cyber-red focus:ring-1 focus:ring-cyber-red transition-all">
             </div>
-
             <div class="flex items-center gap-3">
                 <button onclick="app.openVehicleModal()" class="w-full md:w-auto px-5 py-2.5 bg-gradient-to-r from-cyber-red to-red-700 hover:from-red-600 hover:to-cyber-red text-white font-tech font-bold text-xs uppercase tracking-wider rounded-lg shadow-neon-red transition-all duration-300 flex items-center justify-center space-x-2">
                     <i class="fa-solid fa-plus text-sm"></i>
@@ -150,27 +109,21 @@
                 </button>
             </div>
         </div>
-
-        <!-- MAIN CONTENT AREA -->
         <div id="contentArea"></div>
-
     </main>
 
-    <!-- VEHICLE FORM MODAL (ADD / EDIT) -->
+    <!-- MODAL VEHÍCULO -->
     <div id="vehicleModal" class="fixed inset-0 z-50 hidden modal-blur bg-black/80 flex items-center justify-center p-4 overflow-y-auto">
         <div class="bg-cyber-card border-2 border-cyber-red/80 rounded-2xl w-full max-w-2xl my-8 p-6 sm:p-8 shadow-neon-red relative">
             <button onclick="app.closeVehicleModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
                 <i class="fa-solid fa-xmark text-2xl"></i>
             </button>
-
             <div class="flex items-center space-x-3 mb-6 pb-3 border-b border-cyber-border">
                 <i class="fa-solid fa-car-wrench text-2xl text-cyber-red"></i>
                 <h3 id="modalTitle" class="font-tech text-xl font-bold text-white uppercase tracking-wider">Registrar Nuevo Vehículo</h3>
             </div>
-
             <form onsubmit="app.saveVehicle(event)" class="space-y-4">
                 <input type="hidden" id="vehicleId">
-
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-tech text-gray-300 mb-1">PLACA / PATENTE *</label>
@@ -181,7 +134,6 @@
                         <input type="text" id="vOwner" required placeholder="Nombre completo" class="w-full px-3 py-2 bg-cyber-dark border border-cyber-border rounded text-sm text-white focus:border-cyber-red focus:outline-none">
                     </div>
                 </div>
-
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-tech text-gray-300 mb-1">MARCA Y MODELO *</label>
@@ -192,8 +144,6 @@
                         <input type="number" id="vMileage" required placeholder="Ej: 85000" class="w-full px-3 py-2 bg-cyber-dark border border-cyber-border rounded text-sm text-white focus:border-cyber-red focus:outline-none">
                     </div>
                 </div>
-
-                <!-- Vehicle Photo Upload -->
                 <div>
                     <label class="block text-xs font-tech text-gray-300 mb-1">FOTO DEL VEHÍCULO</label>
                     <div class="flex items-center space-x-4">
@@ -206,11 +156,10 @@
                             <button type="button" onclick="document.getElementById('vPhotoInput').click()" class="px-4 py-2 bg-cyber-dark border border-cyber-border hover:border-cyber-red rounded text-xs font-tech text-white transition-all">
                                 <i class="fa-solid fa-upload mr-1"></i> Seleccionar Imagen
                             </button>
-                            <p class="text-[10px] text-gray-500 mt-1">La imagen se optimiza automáticamente antes de subirse a la nube.</p>
+                            <p class="text-[10px] text-gray-500 mt-1">Se comprime a ~900px antes de subir (recomendado &lt; 300 KB).</p>
                         </div>
                     </div>
                 </div>
-
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 border-t border-cyber-border/40">
                     <div>
                         <label class="block text-xs font-tech text-gray-300 mb-1">CAMBIO DE ACEITE</label>
@@ -221,7 +170,6 @@
                         <input type="text" id="vFilters" placeholder="Ej: Aire, Aceite y Cabina" class="w-full px-3 py-2 bg-cyber-dark border border-cyber-border rounded text-sm text-white focus:border-cyber-red focus:outline-none">
                     </div>
                 </div>
-
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-tech text-gray-300 mb-1">PRÓXIMO SERVICIO (KM / FECHA)</label>
@@ -232,12 +180,10 @@
                         <input type="date" id="vDate" class="w-full px-3 py-2 bg-cyber-dark border border-cyber-border rounded text-sm text-white focus:border-cyber-red focus:outline-none">
                     </div>
                 </div>
-
                 <div>
                     <label class="block text-xs font-tech text-gray-300 mb-1">NOTAS OPCIONALES / OBSERVACIONES</label>
                     <textarea id="vNotes" rows="2" placeholder="Detalles de frenos, suspensión, fugas u otras revisiones..." class="w-full px-3 py-2 bg-cyber-dark border border-cyber-border rounded text-sm text-white focus:border-cyber-red focus:outline-none"></textarea>
                 </div>
-
                 <div class="flex justify-end space-x-3 pt-4 border-t border-cyber-border">
                     <button type="button" onclick="app.closeVehicleModal()" class="px-5 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 font-tech text-xs uppercase rounded">Cancelar</button>
                     <button type="submit" id="saveVehicleBtn" class="px-6 py-2 bg-cyber-red hover:bg-red-600 text-white font-tech text-xs uppercase font-bold rounded shadow-neon-red">Guardar Registro</button>
@@ -246,21 +192,18 @@
         </div>
     </div>
 
-    <!-- QR CODE MODAL WITH BRAND LOGO SIDE BY SIDE -->
+    <!-- MODAL QR -->
     <div id="qrModal" class="fixed inset-0 z-50 hidden modal-blur bg-black/85 flex items-center justify-center p-4">
         <div class="bg-cyber-card border-2 border-cyber-red/80 rounded-2xl w-full max-w-xl p-6 sm:p-8 shadow-neon-red relative">
             <button onclick="app.closeQRModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
                 <i class="fa-solid fa-xmark text-2xl"></i>
             </button>
-
             <div class="text-center mb-4">
                 <h3 class="font-tech text-lg sm:text-xl font-bold text-white uppercase tracking-wider">Código QR de Ficha Técnica</h3>
                 <p class="text-xs text-gray-400">Escanee para abrir la página pública dedicada de este vehículo</p>
             </div>
-
             <div class="bg-cyber-dark border border-cyber-border p-6 rounded-xl relative overflow-hidden mb-6">
                 <div class="flex flex-col sm:flex-row items-center justify-around gap-6">
-                    <!-- Left Side: Workshop Logo Branding -->
                     <div class="flex flex-col items-center text-center max-w-[200px]">
                         <div class="w-20 h-20 rounded-full border-2 border-cyber-red p-1 bg-black shadow-neon-red mb-2 flex items-center justify-center">
                             <svg viewBox="0 0 200 200" class="w-full h-full">
@@ -275,17 +218,13 @@
                         <span class="text-[10px] font-bold text-cyber-red tracking-widest uppercase">Taller Mecánico</span>
                         <span id="qrVehiclePlate" class="mt-3 px-3 py-1 bg-cyber-red/20 border border-cyber-red text-cyber-red font-tech font-bold text-xs rounded">---</span>
                     </div>
-
                     <div class="hidden sm:block w-px h-32 bg-cyber-border"></div>
-
-                    <!-- Right Side: Generated QR Code -->
                     <div class="flex flex-col items-center">
                         <div id="qrcode" class="p-3 bg-white rounded-lg shadow-lg border-2 border-cyber-red"></div>
                         <span class="text-[10px] text-gray-400 mt-2 font-mono">Página Única del Vehículo</span>
                     </div>
                 </div>
             </div>
-
             <div class="flex flex-wrap gap-3 justify-center">
                 <button onclick="app.openVehicleInNewTab()" class="px-4 py-2.5 bg-gradient-to-r from-cyber-red to-red-700 hover:from-red-600 hover:to-cyber-red text-white font-tech text-xs font-bold rounded shadow-neon-red flex items-center space-x-2">
                     <i class="fa-solid fa-up-right-from-square"></i>
@@ -300,26 +239,22 @@
     </div>
 
     <!-- ============================================================
-         CONFIGURACIÓN DE FIREBASE
-         👇 REEMPLAZA ESTOS VALORES CON LOS DE TU PROYECTO 👇
+         ⚙️ CONFIGURACIÓN DE GITHUB — ¡EDITA SOLO ESTAS 4 LÍNEAS!
          ============================================================ -->
     <script>
-        window.FIREBASE_CONFIG = {
-            apiKey:            "TU_API_KEY",
-            authDomain:        "TU-PROYECTO.firebaseapp.com",
-            databaseURL:       "https://TU-PROYECTO-default-rtdb.firebaseio.com",
-            projectId:         "TU-PROYECTO",
-            storageBucket:     "TU-PROYECTO.appspot.com",
-            messagingSenderId: "000000000000",
-            appId:             "1:000000000000:web:xxxxxxxxxxxx"
+        window.GITHUB_CONFIG = {
+            owner:  "matias3196189-prog",                 // 👈 tu usuario de GitHub
+            repo:   "matias3196189-prog.github.io",       // 👈 tu repositorio
+            branch: "main",                                // 👈 "main" o "master"
+            path:   "data.json",                           // 👈 archivo donde se guardan los autos
+            token:  "PEGA_AQUI_TU_TOKEN_github_pat_..."   // 👈 tu token fine-grained
         };
 
-        // Clave de taller (opcional). Cámbiala por algo único tuyo.
-        // Sirve para que tu base de datos no esté en una ruta obvia.
-        window.WORKSHOP_KEY = "el-pobre-jose-taller-2026";
+        // 🔁 Sincronización automática: cada 20 segundos revisa si hay cambios
+        //    en GitHub (por si otro dispositivo guardó algo). Ponlo en 0 para desactivar.
+        window.SYNC_INTERVAL_MS = 20000;
     </script>
 
-    <!-- JAVASCRIPT LOGIC -->
     <script>
         class MechanicalApp {
             constructor() {
@@ -327,33 +262,27 @@
                 this.vehicles = [];
                 this.currentPhotoBase64 = '';
                 this.activeVehicleIdForQR = null;
-
-                this.cloudEnabled = false;   // ¿Firebase está configurado y funcionando?
-                this.ready = false;          // ¿Ya tenemos datos listos para pintar?
-                this.dbRef = null;           // Referencia al nodo de vehículos
-                this.storageKey = 'pobreJose_vehicles'; // caché local
+                this.cloudEnabled = false;
+                this.ready = false;
+                this.currentSha = null;    // SHA del archivo (necesario para actualizar en GitHub)
+                this.syncTimer = null;
+                this.storageKey = 'pobreJose_vehicles';
+                this.lastJsonHash = '';    // para no repintar si no hubo cambios
             }
 
-            /* =========================================================
-               INICIALIZACIÓN
-               ========================================================= */
             init() {
-                // 1. Sesión de admin (por pestaña)
                 if (sessionStorage.getItem('pobreJose_admin') === 'true') {
                     this.isAdmin = true;
                     this.updateAdminUI(true);
                 }
 
-                // 2. Caché local (para que se vea algo al instante)
                 const cached = localStorage.getItem(this.storageKey);
                 if (cached) {
                     try { this.vehicles = JSON.parse(cached) || []; } catch (e) { this.vehicles = []; }
                 }
 
-                // 3. Conectar a la nube
                 const cloudStarted = this.initCloud();
 
-                // 4. Si no hay nube, arrancamos en modo local
                 if (!cloudStarted) {
                     this.ready = true;
                     if (this.vehicles.length === 0) this.seedDemoVehicle();
@@ -361,86 +290,198 @@
                     this.render();
                 }
 
-                // 5. Navegación con atrás/adelante del navegador
                 window.addEventListener('popstate', () => this.render());
-
-                // 6. Mostrar advertencia si Firebase no está configurado
                 this.checkConfigWarning();
             }
 
-            /* =========================================================
-               FIREBASE
-               ========================================================= */
+            /* ============ GITHUB STORAGE ============ */
+            isGithubConfigured() {
+                const c = window.GITHUB_CONFIG || {};
+                return c.owner && c.repo && c.token && c.token.indexOf('PEGA_AQUI') === -1 && c.token.startsWith('github_pat_');
+            }
+
             initCloud() {
-                const cfg = window.FIREBASE_CONFIG;
-
-                const notConfigured =
-                    !cfg ||
-                    !cfg.databaseURL ||
-                    cfg.databaseURL.indexOf('TU-PROYECTO') !== -1 ||
-                    cfg.apiKey === 'TU_API_KEY';
-
-                if (notConfigured || typeof firebase === 'undefined') {
-                    console.warn('[Modo local] Firebase no está configurado o no cargó.');
+                if (!this.isGithubConfigured()) {
+                    console.warn('[Modo local] GitHub no está configurado.');
                     return false;
                 }
 
-                try {
-                    if (!firebase.apps.length) firebase.initializeApp(cfg);
+                this.cloudEnabled = true;
+                this.setStatus('connecting');
+                this.ready = false;
 
-                    this.cloudEnabled = true;
-                    this.setStatus('connecting');
+                this.loadFromGitHub().then(() => {
+                    this.ready = true;
+                    this.setStatus('cloud');
+                    this.render();
+                    this.startAutoSync();
+                }).catch(err => {
+                    console.error('GitHub error:', err);
+                    this.ready = true;
+                    this.setStatus('error', err.message);
+                    this.render();
+                });
 
-                    const basePath = 'talleres/' + window.WORKSHOP_KEY + '/vehiculos';
-                    this.dbRef = firebase.database().ref(basePath);
+                return true;
+            }
 
-                    // Escucha en TIEMPO REAL: cualquier cambio se refleja
-                    // automáticamente en todos los dispositivos conectados.
-                    this.dbRef.on('value', (snap) => {
-                        const raw = snap.val() || {};
-                        const list = Object.keys(raw).map(k => {
-                            const v = raw[k];
-                            v.id = v.id || k;
-                            return v;
+            // Lee data.json desde el repo
+            async loadFromGitHub(silent = false) {
+                const c = window.GITHUB_CONFIG;
+                const url = `https://api.github.com/repos/${c.owner}/${c.repo}/contents/${c.path}?ref=${c.branch}&t=${Date.now()}`;
+
+                const res = await fetch(url, {
+                    headers: {
+                        'Authorization': `Bearer ${c.token}`,
+                        'Accept': 'application/vnd.github.v3+json'
+                    }
+                });
+
+                if (res.status === 404) {
+                    // El archivo aún no existe -> lo creamos vacío
+                    this.vehicles = [];
+                    this.currentSha = null;
+                    if (!silent) {
+                        try { await this.writeToGitHub([]); } catch (e) { console.warn(e); }
+                    }
+                    return;
+                }
+
+                if (!res.ok) {
+                    const err = await res.json().catch(() => ({}));
+                    throw new Error(`GitHub ${res.status}: ${err.message || 'error leyendo data.json'}`);
+                }
+
+                const json = await res.json();
+                this.currentSha = json.sha;
+
+                const decoded = this.b64DecodeUnicode(json.content.replace(/\n/g, ''));
+                let list = [];
+                try { list = JSON.parse(decoded) || []; } catch (e) { list = []; }
+
+                // Detectar si cambió respecto a lo que ya teníamos (para no repintar en cada poll)
+                const hash = JSON.stringify(list);
+                const changed = hash !== this.lastJsonHash;
+
+                if (changed) {
+                    this.vehicles = list;
+                    this.lastJsonHash = hash;
+                    localStorage.setItem(this.storageKey, JSON.stringify(list));
+                    if (silent) this.render(); // refrescar UI sin spinners
+                }
+
+                return changed;
+            }
+
+            // Escribe data.json en el repo (crea commit)
+            async writeToGitHub(list) {
+                const c = window.GITHUB_CONFIG;
+                const url = `https://api.github.com/repos/${c.owner}/${c.repo}/contents/${c.path}`;
+
+                const content = this.b64EncodeUnicode(JSON.stringify(list, null, 2));
+
+                // Si no tenemos SHA, lo pedimos antes (necesario para UPDATE)
+                if (!this.currentSha) {
+                    try {
+                        const head = await fetch(url + `?ref=${c.branch}&t=${Date.now()}`, {
+                            headers: { 'Authorization': `Bearer ${c.token}`, 'Accept': 'application/vnd.github.v3+json' }
                         });
-
-                        // Orden: más recientes primero
-                        list.sort((a, b) => (b.updatedAt || b.createdAt || 0) - (a.updatedAt || a.createdAt || 0));
-
-                        this.vehicles = list;
-                        localStorage.setItem(this.storageKey, JSON.stringify(list));
-
-                        this.ready = true;
-                        this.setStatus('cloud');
-                        this.render();
-                    }, (err) => {
-                        console.error('Error de Firebase:', err);
-                        this.ready = true;
-                        this.setStatus('error', err.message);
-                        this.render();
-                    });
-
-                    return true;
-                } catch (e) {
-                    console.error(e);
-                    this.cloudEnabled = false;
-                    return false;
+                        if (head.ok) {
+                            const hj = await head.json();
+                            this.currentSha = hj.sha;
+                        }
+                    } catch (e) { /* archivo nuevo, no pasa nada */ }
                 }
+
+                const body = {
+                    message: `Actualizar vehículos (${new Date().toLocaleString('es-CL')})`,
+                    content,
+                    branch: c.branch
+                };
+                if (this.currentSha) body.sha = this.currentSha;
+
+                const res = await fetch(url, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${c.token}`,
+                        'Accept': 'application/vnd.github.v3+json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(body)
+                });
+
+                if (res.status === 409) {
+                    // Conflicto: alguien guardó al mismo tiempo. Reintentamos 1 vez.
+                    const head = await fetch(url + `?ref=${c.branch}&t=${Date.now()}`, {
+                        headers: { 'Authorization': `Bearer ${c.token}`, 'Accept': 'application/vnd.github.v3+json' }
+                    });
+                    const hj = await head.json();
+                    this.currentSha = hj.sha;
+                    body.sha = this.currentSha;
+
+                    const retry = await fetch(url, {
+                        method: 'PUT',
+                        headers: {
+                            'Authorization': `Bearer ${c.token}`,
+                            'Accept': 'application/vnd.github.v3+json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(body)
+                    });
+                    if (!retry.ok) {
+                        const err = await retry.json().catch(() => ({}));
+                        throw new Error(err.message || 'Conflicto al guardar');
+                    }
+                    const out = await retry.json();
+                    this.currentSha = out.content.sha;
+                    return out;
+                }
+
+                if (!res.ok) {
+                    const err = await res.json().catch(() => ({}));
+                    throw new Error(`GitHub ${res.status}: ${err.message || 'error guardando'}`);
+                }
+
+                const json = await res.json();
+                this.currentSha = json.content.sha;
+                this.lastJsonHash = JSON.stringify(list);
+                return json;
+            }
+
+            startAutoSync() {
+                if (this.syncTimer) clearInterval(this.syncTimer);
+                if (!window.SYNC_INTERVAL_MS) return;
+
+                this.syncTimer = setInterval(async () => {
+                    // Solo hacemos polling si no estamos guardando
+                    if (document.getElementById('saveVehicleBtn')?.disabled) return;
+                    try {
+                        await this.loadFromGitHub(true);
+                    } catch (e) {
+                        console.warn('Sync error:', e.message);
+                    }
+                }, window.SYNC_INTERVAL_MS);
+            }
+
+            // Helpers Base64 con soporte UTF-8 (tildes, ñ, etc.)
+            b64EncodeUnicode(str) {
+                return btoa(unescape(encodeURIComponent(str)));
+            }
+            b64DecodeUnicode(str) {
+                return decodeURIComponent(escape(atob(str)));
             }
 
             setStatus(mode, detail) {
                 const el = document.getElementById('cloudStatus');
                 if (!el) return;
                 el.classList.remove('hidden');
-
                 const styles = {
                     connecting: ['text-yellow-400', 'border-yellow-500/60', 'bg-yellow-500/10', 'fa-solid fa-cloud-arrow-up', 'CONECTANDO...'],
-                    cloud:      ['text-green-400',  'border-green-500/60',  'bg-green-500/10',  'fa-solid fa-cloud',          'NUBE ACTIVA'],
-                    local:      ['text-gray-400',   'border-gray-500/60',   'bg-gray-500/10',   'fa-solid fa-hard-drive',     'MODO LOCAL'],
-                    error:      ['text-cyber-red',  'border-cyber-red',     'bg-cyber-red/10',  'fa-solid fa-triangle-exclamation', 'ERROR NUBE']
+                    cloud:      ['text-green-400',  'border-green-500/60',  'bg-green-500/10',  'fa-brands fa-github',         'GITHUB OK'],
+                    local:      ['text-gray-400',   'border-gray-500/60',   'bg-gray-500/10',   'fa-solid fa-hard-drive',      'MODO LOCAL'],
+                    error:      ['text-cyber-red',  'border-cyber-red',     'bg-cyber-red/10',  'fa-solid fa-triangle-exclamation', 'ERROR GITHUB']
                 };
                 const s = styles[mode] || styles.local;
-
                 el.className = `text-[10px] font-tech font-bold px-3 py-1 rounded-full border ${s[0]} ${s[1]} ${s[2]}`;
                 el.innerHTML = `<i class="${s[3]} mr-1"></i> ${s[4]}`;
                 el.title = detail || '';
@@ -454,41 +495,31 @@
                 warn.innerHTML = `
                     <i class="fa-solid fa-triangle-exclamation mt-0.5"></i>
                     <div>
-                        <strong>Modo local activo.</strong> Los datos solo se guardan en ESTE navegador.
-                        Para que se vean en todos los dispositivos (y que el QR funcione en los celulares de tus clientes),
-                        configura <code class="text-yellow-200">FIREBASE_CONFIG</code> dentro del HTML.
+                        <strong>Modo local activo.</strong> Los datos solo se guardan en ESTE navegador.<br>
+                        Para que se vean en todos los dispositivos, configura <code class="text-yellow-200">GITHUB_CONFIG</code> (owner, repo, token) al inicio del HTML.
                     </div>`;
                 main.insertBefore(warn, main.firstChild);
             }
 
             seedDemoVehicle() {
                 this.vehicles = [{
-                    id: 'v1',
-                    plate: 'ABC-789',
-                    owner: 'Carlos Mendoza',
-                    model: 'Toyota Hilux 2.8 TURBO',
-                    mileage: 125000,
+                    id: 'v1', plate: 'ABC-789', owner: 'Carlos Mendoza',
+                    model: 'Toyota Hilux 2.8 TURBO', mileage: 125000,
                     oilChange: 'Sintético 5W-30 Mobil 1',
                     filters: 'Filtro Aceite + Filtro Combustible Diésel',
-                    nextService: '135,000 KM o Nov/2026',
-                    date: '2026-10-01',
+                    nextService: '135,000 KM o Nov/2026', date: '2026-10-01',
                     notes: 'Se realizó purga del sistema de frenos y rotación de neumáticos.',
                     photo: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=600&q=80',
-                    createdAt: Date.now(),
-                    updatedAt: Date.now()
+                    createdAt: Date.now(), updatedAt: Date.now()
                 }];
                 localStorage.setItem(this.storageKey, JSON.stringify(this.vehicles));
             }
 
-            /* =========================================================
-               UI ADMIN
-               ========================================================= */
             updateAdminUI(isLoggedIn) {
                 const adminBadge = document.getElementById('adminBadge');
                 const catalogBar = document.getElementById('catalogBar');
                 const authText   = document.getElementById('authText');
                 const authIcon   = document.getElementById('authIcon');
-
                 if (isLoggedIn) {
                     adminBadge.classList.remove('hidden');
                     catalogBar.classList.remove('hidden');
@@ -504,18 +535,14 @@
                 }
             }
 
-            /* =========================================================
-               ROUTING / RENDER
-               ========================================================= */
             render() {
-                // Mientras llegan los datos de la nube, mostramos spinner
                 if (this.cloudEnabled && !this.ready) {
                     document.getElementById('catalogBar').classList.add('hidden');
                     document.getElementById('catalogBar').classList.remove('flex');
                     document.getElementById('contentArea').innerHTML = `
                         <div class="text-center py-24">
                             <div class="spinner"></div>
-                            <p class="font-tech text-xs text-gray-400 mt-4 uppercase tracking-widest">Sincronizando con la nube...</p>
+                            <p class="font-tech text-xs text-gray-400 mt-4 uppercase tracking-widest">Sincronizando con GitHub...</p>
                         </div>`;
                     return;
                 }
@@ -540,8 +567,6 @@
                 }
             }
 
-            handleRouting() { this.render(); }
-
             handleHomeClick() {
                 window.history.pushState({}, document.title, window.location.pathname);
                 this.render();
@@ -562,7 +587,6 @@
                 e.preventDefault();
                 const user = document.getElementById('loginUser').value.trim();
                 const pass = document.getElementById('loginPass').value.trim();
-
                 if (user === 'admin' && pass === 'admin') {
                     this.isAdmin = true;
                     sessionStorage.setItem('pobreJose_admin', 'true');
@@ -575,11 +599,9 @@
             }
 
             renderAdminLoginGate() {
-                const container = document.getElementById('contentArea');
-                container.innerHTML = `
+                document.getElementById('contentArea').innerHTML = `
                     <div class="max-w-md mx-auto my-12 bg-cyber-card border-2 border-cyber-red/80 rounded-2xl p-6 sm:p-8 shadow-neon-red relative overflow-hidden">
                         <div class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-cyber-red via-gray-300 to-cyber-red"></div>
-
                         <div class="text-center mb-6">
                             <div class="w-20 h-20 mx-auto mb-4 rounded-full bg-cyber-dark border-2 border-cyber-red flex items-center justify-center text-cyber-red text-3xl shadow-neon-red">
                                 <i class="fa-solid fa-user-gear"></i>
@@ -587,7 +609,6 @@
                             <h3 class="font-tech text-xl font-bold text-white uppercase tracking-wider">Acceso Restringido</h3>
                             <p class="text-xs text-gray-400 mt-1">El catálogo completo solo es accesible para personal del taller.</p>
                         </div>
-
                         <form onsubmit="app.handleLoginSubmit(event)" class="space-y-4">
                             <div>
                                 <label class="block text-xs font-tech text-gray-300 mb-1 uppercase">Usuario</label>
@@ -596,7 +617,6 @@
                                     <input type="text" id="loginUser" required class="w-full pl-10 pr-4 py-2.5 bg-cyber-dark border border-cyber-border rounded-lg text-sm text-white focus:outline-none focus:border-cyber-red">
                                 </div>
                             </div>
-
                             <div>
                                 <label class="block text-xs font-tech text-gray-300 mb-1 uppercase">Contraseña</label>
                                 <div class="relative">
@@ -604,51 +624,41 @@
                                     <input type="password" id="loginPass" required class="w-full pl-10 pr-4 py-2.5 bg-cyber-dark border border-cyber-border rounded-lg text-sm text-white focus:outline-none focus:border-cyber-red">
                                 </div>
                             </div>
-
                             <div id="loginError" class="hidden text-xs text-cyber-red font-semibold text-center bg-cyber-red/10 py-2 rounded border border-cyber-red/30">
                                 Credenciales incorrectas (Default: admin / admin)
                             </div>
-
                             <button type="submit" class="w-full py-3 bg-gradient-to-r from-cyber-red to-red-700 hover:from-red-600 hover:to-cyber-red text-white font-tech font-bold rounded-lg shadow-neon-red transition-all duration-300 uppercase text-sm tracking-wider mt-4">
                                 Ingresar al Panel Taller
                             </button>
                         </form>
-
                         <div class="mt-6 text-center text-[11px] text-gray-500 font-tech">
                             ¿Es cliente? Escanee el código QR provisto en su ficha técnica para consultar su vehículo.
                         </div>
-                    </div>
-                `;
+                    </div>`;
             }
 
             renderVehicleList(vehiclesToRender = this.vehicles) {
                 const container = document.getElementById('contentArea');
-
                 if (!vehiclesToRender || vehiclesToRender.length === 0) {
                     container.innerHTML = `
                         <div class="text-center py-16 bg-cyber-card/40 rounded-2xl border border-cyber-border">
                             <i class="fa-solid fa-car-rear text-5xl text-gray-600 mb-4"></i>
                             <h3 class="font-tech text-lg text-white uppercase">No hay vehículos registrados</h3>
                             <p class="text-xs text-gray-400 mt-1">Presione "Nuevo Vehículo" para añadir el primer registro.</p>
-                        </div>
-                    `;
+                        </div>`;
                     return;
                 }
 
                 let html = `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">`;
-
                 vehiclesToRender.forEach(v => {
                     html += `
                         <div class="bg-cyber-card border border-cyber-border hover:border-cyber-red/60 rounded-xl overflow-hidden transition-all duration-300 hover:shadow-neon-red flex flex-col justify-between group">
-
                             <div class="relative h-48 bg-cyber-dark overflow-hidden">
                                 <img src="${v.photo || 'https://placehold.co/600x400/161b22/ff1a3c?text=Vehiculo'}" alt="${this.esc(v.model)}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                                 <div class="absolute inset-0 bg-gradient-to-t from-cyber-card via-transparent to-black/60"></div>
-
                                 <div class="absolute top-3 left-3 bg-cyber-black/90 border border-cyber-red text-white font-tech font-bold text-xs px-3 py-1 rounded shadow">
                                     <i class="fa-solid fa-id-card text-cyber-red mr-1"></i> ${this.esc(v.plate)}
                                 </div>
-
                                 <div class="absolute top-3 right-3 flex space-x-1">
                                     <button onclick="app.generateQR('${v.id}')" title="Generar QR" class="w-8 h-8 rounded-full bg-cyber-dark/80 hover:bg-cyber-red text-white border border-cyber-border flex items-center justify-center transition">
                                         <i class="fa-solid fa-qrcode text-xs"></i>
@@ -660,53 +670,42 @@
                                         <i class="fa-solid fa-trash text-xs"></i>
                                     </button>
                                 </div>
-
                                 <div class="absolute bottom-3 left-3 right-3">
                                     <h3 class="font-tech text-lg font-bold text-white truncate">${this.esc(v.model)}</h3>
                                     <p class="text-xs text-gray-300"><i class="fa-solid fa-user text-cyber-red mr-1"></i> ${this.esc(v.owner)}</p>
                                 </div>
                             </div>
-
                             <div class="p-4 space-y-3 flex-grow text-xs">
                                 <div class="flex justify-between items-center py-1.5 border-b border-cyber-border/40">
                                     <span class="text-gray-400 font-tech"><i class="fa-solid fa-gauge-high text-cyber-red mr-1"></i> Kilometraje:</span>
                                     <span class="font-bold text-white font-mono">${Number(v.mileage || 0).toLocaleString()} KM</span>
                                 </div>
-
                                 <div class="py-1 border-b border-cyber-border/40">
                                     <span class="text-gray-400 font-tech block mb-0.5"><i class="fa-solid fa-oil-can text-cyber-red mr-1"></i> Cambio Aceite:</span>
                                     <span class="text-gray-200">${this.esc(v.oilChange) || 'No registrado'}</span>
                                 </div>
-
                                 <div class="py-1 border-b border-cyber-border/40">
                                     <span class="text-gray-400 font-tech block mb-0.5"><i class="fa-solid fa-filter text-cyber-red mr-1"></i> Filtros:</span>
                                     <span class="text-gray-200">${this.esc(v.filters) || 'No registrado'}</span>
                                 </div>
-
                                 <div class="py-1 border-b border-cyber-border/40">
                                     <span class="text-gray-400 font-tech block mb-0.5"><i class="fa-solid fa-calendar-check text-cyber-red mr-1"></i> Próximo Servicio:</span>
                                     <span class="text-cyber-red font-bold">${this.esc(v.nextService) || 'Pendiente'}</span>
                                 </div>
-
                                 ${v.notes ? `
                                     <div class="pt-1">
                                         <span class="text-gray-400 font-tech block mb-0.5"><i class="fa-solid fa-note-sticky text-cyber-red mr-1"></i> Notas:</span>
                                         <p class="text-gray-300 italic bg-cyber-dark/50 p-2 rounded border border-cyber-border/30 line-clamp-2">${this.esc(v.notes)}</p>
-                                    </div>
-                                ` : ''}
+                                    </div>` : ''}
                             </div>
-
                             <div class="p-3 bg-cyber-dark/60 border-t border-cyber-border/60 flex justify-between items-center text-[10px] text-gray-400">
                                 <span>Atendido: ${this.esc(v.date) || 'Reciente'}</span>
                                 <button onclick="app.navigateToVehicle('${v.id}')" class="text-cyber-red font-tech hover:underline flex items-center">
                                     Ver Ficha Pública <i class="fa-solid fa-arrow-right ml-1"></i>
                                 </button>
                             </div>
-
-                        </div>
-                    `;
+                        </div>`;
                 });
-
                 html += `</div>`;
                 container.innerHTML = html;
             }
@@ -714,18 +713,15 @@
             renderSingleVehicleView(id) {
                 const vehicle = this.vehicles.find(v => v.id === id);
                 const container = document.getElementById('contentArea');
-
                 if (!vehicle) {
                     container.innerHTML = `
                         <div class="text-center py-16 bg-cyber-card rounded-xl border border-cyber-red">
                             <i class="fa-solid fa-triangle-exclamation text-4xl text-cyber-red mb-3"></i>
                             <h2 class="font-tech text-xl text-white">Vehículo no encontrado</h2>
                             <p class="text-xs text-gray-400 mt-1">El código QR o enlace ingresado es inválido, o el registro fue eliminado.</p>
-                        </div>
-                    `;
+                        </div>`;
                     return;
                 }
-
                 container.innerHTML = `
                     <div class="max-w-3xl mx-auto bg-cyber-card border-2 border-cyber-red/80 rounded-2xl overflow-hidden shadow-neon-red-lg">
                         <div class="p-4 bg-cyber-dark border-b border-cyber-border flex justify-between items-center">
@@ -735,19 +731,14 @@
                             ${this.isAdmin ? `
                                 <button onclick="app.openVehicleModal('${vehicle.id}')" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white font-tech text-xs rounded">
                                     <i class="fa-solid fa-pen mr-1"></i> Editar Registro
-                                </button>
-                            ` : ''}
+                                </button>` : ''}
                         </div>
-
                         <div class="relative h-64 sm:h-80 bg-black">
                             <img src="${vehicle.photo || 'https://placehold.co/800x500/161b22/ff1a3c?text=Vehiculo'}" class="w-full h-full object-cover">
                             <div class="absolute inset-0 bg-gradient-to-t from-cyber-card via-black/40 to-transparent"></div>
-
                             <div class="absolute bottom-4 left-4 right-4 flex flex-col sm:flex-row justify-between sm:items-end gap-2">
                                 <div>
-                                    <span class="bg-cyber-red text-white font-tech font-bold text-sm px-3 py-1 rounded shadow">
-                                        ${this.esc(vehicle.plate)}
-                                    </span>
+                                    <span class="bg-cyber-red text-white font-tech font-bold text-sm px-3 py-1 rounded shadow">${this.esc(vehicle.plate)}</span>
                                     <h2 class="font-tech text-2xl sm:text-3xl font-black text-white mt-2">${this.esc(vehicle.model)}</h2>
                                     <p class="text-sm text-gray-300"><i class="fa-solid fa-user text-cyber-red mr-1"></i> Propietario: ${this.esc(vehicle.owner)}</p>
                                 </div>
@@ -757,7 +748,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="p-6 space-y-6">
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div class="bg-cyber-dark border border-cyber-border p-4 rounded-xl">
@@ -767,7 +757,6 @@
                                     </div>
                                     <p class="text-sm text-gray-200">${this.esc(vehicle.oilChange) || 'Sin registro'}</p>
                                 </div>
-
                                 <div class="bg-cyber-dark border border-cyber-border p-4 rounded-xl">
                                     <div class="flex items-center space-x-2 text-cyber-red mb-2">
                                         <i class="fa-solid fa-filter text-lg"></i>
@@ -776,7 +765,6 @@
                                     <p class="text-sm text-gray-200">${this.esc(vehicle.filters) || 'Sin registro'}</p>
                                 </div>
                             </div>
-
                             <div class="bg-cyber-dark border border-cyber-red/40 p-4 rounded-xl flex items-center justify-between">
                                 <div class="flex items-center space-x-3">
                                     <div class="w-10 h-10 rounded-full bg-cyber-red/20 border border-cyber-red flex items-center justify-center text-cyber-red">
@@ -789,24 +777,19 @@
                                 </div>
                                 <span class="text-xs text-gray-400">Atendido: ${this.esc(vehicle.date) || 'N/A'}</span>
                             </div>
-
                             ${vehicle.notes ? `
                                 <div class="bg-cyber-dark border border-cyber-border p-4 rounded-xl">
                                     <h4 class="font-tech font-bold text-xs text-gray-400 uppercase mb-2">Observaciones Taller</h4>
                                     <p class="text-sm text-gray-300 italic whitespace-pre-line">${this.esc(vehicle.notes)}</p>
-                                </div>
-                            ` : ''}
-
+                                </div>` : ''}
                             <div class="pt-4 border-t border-cyber-border flex justify-between items-center">
                                 <button onclick="app.generateQR('${vehicle.id}')" class="px-4 py-2 bg-cyber-dark border border-cyber-red text-white font-tech text-xs rounded hover:bg-cyber-red transition">
                                     <i class="fa-solid fa-qrcode mr-1"></i> Ver Código QR
                                 </button>
-
                                 <span class="text-[10px] text-gray-500 font-tech">EL POBRE JOSÉ - TALLER MECÁNICO</span>
                             </div>
                         </div>
-                    </div>
-                `;
+                    </div>`;
             }
 
             navigateToVehicle(id) {
@@ -825,17 +808,12 @@
                 this.renderVehicleList(filtered);
             }
 
-            /* =========================================================
-               MODAL: CREAR / EDITAR
-               ========================================================= */
             openVehicleModal(id = null) {
                 const modal = document.getElementById('vehicleModal');
                 const title = document.getElementById('modalTitle');
-
                 if (id) {
                     const vehicle = this.vehicles.find(v => v.id === id);
                     if (!vehicle) return;
-
                     title.innerText = 'Editar Registro de Vehículo';
                     document.getElementById('vehicleId').value = vehicle.id;
                     document.getElementById('vPlate').value = vehicle.plate || '';
@@ -847,7 +825,6 @@
                     document.getElementById('vNextService').value = vehicle.nextService || '';
                     document.getElementById('vDate').value = vehicle.date || '';
                     document.getElementById('vNotes').value = vehicle.notes || '';
-
                     if (vehicle.photo) {
                         this.currentPhotoBase64 = vehicle.photo;
                         document.getElementById('vPhotoPreview').src = vehicle.photo;
@@ -874,39 +851,23 @@
                     document.getElementById('vPhotoPreview').classList.add('hidden');
                     document.getElementById('vPhotoPlaceholder').classList.remove('hidden');
                 }
-
-                // Limpiar input file
                 document.getElementById('vPhotoInput').value = '';
                 modal.classList.remove('hidden');
             }
 
-            closeVehicleModal() {
-                document.getElementById('vehicleModal').classList.add('hidden');
-            }
+            closeVehicleModal() { document.getElementById('vehicleModal').classList.add('hidden'); }
 
-            /* =========================================================
-               SUBIDA DE FOTO (con compresión automática)
-               ========================================================= */
             async handlePhotoUpload(event) {
                 const file = event.target.files[0];
                 if (!file) return;
-
                 try {
-                    // Redimensionamos a máx. 900px y comprimimos a JPEG.
-                    // Sin esto, una foto de celular puede pesar 4-6 MB y
-                    // hacer que la base de datos se vuelva lentísima.
                     const compressed = await this.compressImage(file, 900, 0.72);
                     this.currentPhotoBase64 = compressed;
-
                     document.getElementById('vPhotoPreview').src = compressed;
                     document.getElementById('vPhotoPreview').classList.remove('hidden');
                     document.getElementById('vPhotoPlaceholder').classList.add('hidden');
-
                     const kb = Math.round(compressed.length * 0.75 / 1024);
-                    console.log(`Imagen comprimida: ~${kb} KB`);
-                    if (kb > 800) {
-                        alert('La imagen sigue siendo grande (~' + kb + ' KB). Considera usar una foto más liviana.');
-                    }
+                    if (kb > 400) alert('La imagen pesa ~' + kb + ' KB. Recomendado < 300 KB para que el JSON no crezca demasiado.');
                 } catch (err) {
                     console.error(err);
                     alert('No se pudo procesar la imagen.');
@@ -920,21 +881,16 @@
                         const img = new Image();
                         img.onload = () => {
                             let { width, height } = img;
-
                             if (width > maxWidth) {
                                 height = Math.round(height * maxWidth / width);
                                 width = maxWidth;
                             }
-
                             const canvas = document.createElement('canvas');
-                            canvas.width = width;
-                            canvas.height = height;
-
+                            canvas.width = width; canvas.height = height;
                             const ctx = canvas.getContext('2d');
                             ctx.fillStyle = '#ffffff';
                             ctx.fillRect(0, 0, width, height);
                             ctx.drawImage(img, 0, 0, width, height);
-
                             resolve(canvas.toDataURL('image/jpeg', quality));
                         };
                         img.onerror = reject;
@@ -945,16 +901,12 @@
                 });
             }
 
-            /* =========================================================
-               GUARDAR / ELIMINAR (NUBE + CACHÉ)
-               ========================================================= */
             async saveVehicle(e) {
                 e.preventDefault();
-
                 const btn = document.getElementById('saveVehicleBtn');
                 const originalText = btn.innerHTML;
                 btn.disabled = true;
-                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i> Guardando...';
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i> Subiendo a GitHub...';
 
                 const id = document.getElementById('vehicleId').value || ('v_' + Date.now());
                 const existing = this.vehicles.find(v => v.id === id);
@@ -975,24 +927,23 @@
                     updatedAt: Date.now()
                 };
 
+                // Actualizamos la lista local
+                const idx = this.vehicles.findIndex(v => v.id === id);
+                if (idx >= 0) this.vehicles[idx] = vehicleData;
+                else this.vehicles.unshift(vehicleData);
+
                 try {
-                    if (this.cloudEnabled && this.dbRef) {
-                        // Guardar en la nube -> el listener actualiza todos los dispositivos
-                        await this.dbRef.child(id).set(vehicleData);
+                    if (this.cloudEnabled) {
+                        await this.writeToGitHub(this.vehicles);
                     } else {
-                        // Modo local
-                        const idx = this.vehicles.findIndex(v => v.id === id);
-                        if (idx >= 0) this.vehicles[idx] = vehicleData;
-                        else this.vehicles.unshift(vehicleData);
                         localStorage.setItem(this.storageKey, JSON.stringify(this.vehicles));
                     }
-
                     this.closeVehicleModal();
                     this.render();
                 } catch (err) {
                     console.error(err);
-                    alert('❌ Error al guardar:\n' + err.message +
-                          '\n\nRevisa las reglas de tu Firebase Realtime Database.');
+                    alert('❌ Error al guardar en GitHub:\n\n' + err.message +
+                        '\n\nVerifica:\n• Que el token tenga permisos "Contents: Read and write".\n• Que el repo y la rama sean correctos.\n• Que data.json exista (o permiso para crearlo).');
                 } finally {
                     btn.disabled = false;
                     btn.innerHTML = originalText;
@@ -1001,57 +952,42 @@
 
             async deleteVehicle(id) {
                 if (!confirm('¿Está seguro de que desea eliminar este registro de vehículo?')) return;
-
+                this.vehicles = this.vehicles.filter(v => v.id !== id);
                 try {
-                    if (this.cloudEnabled && this.dbRef) {
-                        await this.dbRef.child(id).remove();
+                    if (this.cloudEnabled) {
+                        await this.writeToGitHub(this.vehicles);
                     } else {
-                        this.vehicles = this.vehicles.filter(v => v.id !== id);
                         localStorage.setItem(this.storageKey, JSON.stringify(this.vehicles));
                     }
                     this.render();
                 } catch (err) {
                     console.error(err);
-                    alert('❌ Error al eliminar: ' + err.message);
+                    alert('❌ Error al eliminar en GitHub: ' + err.message);
                 }
             }
 
-            /* =========================================================
-               QR
-               ========================================================= */
             generateQR(id) {
                 const vehicle = this.vehicles.find(v => v.id === id);
                 if (!vehicle) return;
-
                 this.activeVehicleIdForQR = id;
                 document.getElementById('qrVehiclePlate').innerText = `PATENTE: ${vehicle.plate}`;
-
                 const qrUrl = this.getVehicleUrl(id);
-
                 const qrContainer = document.getElementById('qrcode');
                 qrContainer.innerHTML = '';
-
                 new QRCode(qrContainer, {
-                    text: qrUrl,
-                    width: 140,
-                    height: 140,
-                    colorDark: '#000000',
-                    colorLight: '#ffffff',
+                    text: qrUrl, width: 140, height: 140,
+                    colorDark: '#000000', colorLight: '#ffffff',
                     correctLevel: QRCode.CorrectLevel.H
                 });
-
                 document.getElementById('qrModal').classList.remove('hidden');
             }
 
             getVehicleUrl(id) {
-                // URL absoluta y limpia (funciona en GitHub Pages y en local)
                 const base = window.location.origin + window.location.pathname;
                 return `${base}?v=${id}`;
             }
 
-            closeQRModal() {
-                document.getElementById('qrModal').classList.add('hidden');
-            }
+            closeQRModal() { document.getElementById('qrModal').classList.add('hidden'); }
 
             openVehicleInNewTab() {
                 if (this.activeVehicleIdForQR) {
@@ -1062,36 +998,26 @@
             copyQRLink() {
                 if (!this.activeVehicleIdForQR) return;
                 const fullLink = this.getVehicleUrl(this.activeVehicleIdForQR);
-
                 const dummy = document.createElement('input');
                 document.body.appendChild(dummy);
                 dummy.value = fullLink;
                 dummy.select();
                 document.execCommand('copy');
                 document.body.removeChild(dummy);
-
                 alert('¡Enlace directo copiado al portapapeles!\n\n' + fullLink);
             }
 
-            /* =========================================================
-               UTILIDADES
-               ========================================================= */
             esc(str) {
                 if (str === undefined || str === null) return '';
                 return String(str)
-                    .replace(/&/g, '&amp;')
-                    .replace(/</g, '&lt;')
-                    .replace(/>/g, '&gt;')
-                    .replace(/"/g, '&quot;')
+                    .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;').replace(/"/g, '&quot;')
                     .replace(/'/g, '&#039;');
             }
         }
 
         let app;
-        window.onload = function () {
-            app = new MechanicalApp();
-            app.init();
-        };
+        window.onload = function () { app = new MechanicalApp(); app.init(); };
     </script>
 </body>
 </html>
