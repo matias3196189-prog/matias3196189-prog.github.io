@@ -1,841 +1,913 @@
 <!DOCTYPE html>
-<html lang="es" class="dark">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>El Pobre José - Taller Mecánico | Sistema Mantenimiento Vehicular</title>
-    
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        cyber: {
-                            black: '#07080a',
-                            dark: '#0e1117',
-                            card: '#161b22',
-                            border: '#2a3241',
-                            red: '#ff1a3c',
-                            redGlow: '#ff002b',
-                            silver: '#c0c0c0',
-                            silverLight: '#e6e6e6'
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        tech: ['Orbitron', 'sans-serif']
-                    },
-                    boxShadow: {
-                        'neon-red': '0 0 15px rgba(255, 26, 60, 0.6), 0 0 30px rgba(255, 26, 60, 0.2)',
-                        'neon-red-lg': '0 0 25px rgba(255, 26, 60, 0.8), 0 0 50px rgba(255, 26, 60, 0.4)'
-                    }
-                }
-            }
-        }
-    </script>
-    
-    <!-- Google Fonts & FontAwesome Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- QR Code Library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El Pobre José - Taller Mecánico</title>
+  <!-- Google Fonts: Orbitron y Rajdhani -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- QRCode.js Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <style>
+    :root {
+      --primary-red: #ff002b;
+      --red-glow: rgba(255, 0, 43, 0.5);
+      --bg-dark: #08080a;
+      --card-bg: rgba(18, 18, 24, 0.85);
+      --border-color: #2a2a36;
+      --text-main: #f0f0f5;
+      --text-muted: #8a8a9e;
+      --silver: #d1d5db;
+    }
 
-    <style>
-        body {
-            background-color: #07080a;
-            color: #e6e6e6;
-            font-family: 'Inter', sans-serif;
-            background-image: 
-                radial-gradient(circle at 50% 0%, rgba(255, 26, 60, 0.15) 0%, transparent 70%),
-                linear-gradient(to bottom, rgba(7, 8, 10, 0.95), rgba(14, 17, 23, 0.98));
-            background-attachment: fixed;
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Rajdhani', sans-serif;
+    }
 
-        .font-tech {
-            font-family: 'Orbitron', sans-serif;
-        }
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(255, 0, 43, 0.15), transparent 70%),
+        linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(8,8,10,0.95));
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
 
-        .chrome-text {
-            background: linear-gradient(180deg, #ffffff 0%, #c0c0c0 45%, #707070 50%, #e6e6e6 85%, #ffffff 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8));
-        }
+    header {
+      background: rgba(12, 12, 16, 0.9);
+      border-bottom: 2px solid var(--primary-red);
+      box-shadow: 0 4px 20px rgba(255, 0, 43, 0.2);
+      padding: 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+    }
 
-        .glow-text-red {
-            text-shadow: 0 0 10px #ff1a3c, 0 0 20px #ff1a3c;
-        }
+    .header-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
 
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #07080a;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #2a3241;
-            border-radius: 4px;
-            border: 1px solid #ff1a3c;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #ff1a3c;
-        }
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
 
-        .modal-blur {
-            backdrop-filter: blur(8px);
-        }
-    </style>
+    .logo-img {
+      height: 50px;
+      width: auto;
+      filter: drop-shadow(0 0 8px var(--red-glow));
+    }
+
+    .brand-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      background: linear-gradient(180deg, #fff 0%, var(--silver) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-subtitle {
+      color: var(--primary-red);
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      font-weight: 700;
+    }
+
+    .admin-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn {
+      background: linear-gradient(135deg, #1a1a24 0%, #0d0d12 100%);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+    }
+
+    .btn:hover {
+      border-color: var(--primary-red);
+      box-shadow: 0 0 10px var(--red-glow);
+      color: #fff;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #ff002b 0%, #b3001e 100%);
+      border: none;
+      color: #fff;
+      box-shadow: 0 0 10px var(--red-glow);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #ff264a 0%, #d60024 100%);
+      box-shadow: 0 0 20px var(--red-glow);
+    }
+
+    .btn-danger {
+      border-color: #ff3333;
+      color: #ff3333;
+    }
+
+    .btn-danger:hover {
+      background: #ff3333;
+      color: #fff;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* Modales y Formularios */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: var(--card-bg);
+      border: 1px solid var(--primary-red);
+      box-shadow: 0 0 30px rgba(255, 0, 43, 0.3);
+      border-radius: 12px;
+      width: 100%;
+      max-width: 550px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 2rem;
+      position: relative;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-title {
+      font-family: 'Orbitron', sans-serif;
+      color: var(--primary-red);
+      font-size: 1.2rem;
+    }
+
+    .close-modal {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .close-modal:hover { color: #fff; }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-weight: 600;
+      color: var(--silver);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: rgba(10, 10, 14, 0.8);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      color: #fff;
+      font-size: 1rem;
+      outline: none;
+      transition: all 0.3s;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary-red);
+      box-shadow: 0 0 8px var(--red-glow);
+    }
+
+    textarea.form-control {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    /* Grilla de Vehículos */
+    .vehicles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .vehicle-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .vehicle-card:hover {
+      border-color: var(--primary-red);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.5), 0 0 15px rgba(255,0,43,0.2);
+    }
+
+    .vehicle-img-container {
+      width: 100%;
+      height: 200px;
+      background: #000;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .vehicle-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .vehicle-body {
+      padding: 1.2rem;
+    }
+
+    .vehicle-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.2rem;
+      color: #fff;
+      margin-bottom: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .plate-badge {
+      background: var(--primary-red);
+      color: #fff;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .info-list {
+      list-style: none;
+      margin: 1rem 0;
+    }
+
+    .info-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.4rem 0;
+      border-bottom: 1px dashed rgba(255,255,255,0.08);
+      font-size: 0.95rem;
+    }
+
+    .info-label {
+      color: var(--text-muted);
+    }
+
+    .info-value {
+      font-weight: 600;
+      color: var(--silver);
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    /* Vista Pública del Vehículo */
+    .public-view {
+      max-width: 700px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      border: 1px solid var(--primary-red);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 0 30px var(--red-glow);
+    }
+
+    /* Estilos del Contenedor QR */
+    .qr-modal-body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      text-align: center;
+    }
+
+    .qr-display-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.2);
+      max-width: 100%;
+      flex-wrap: wrap;
+    }
+
+    .qr-logo {
+      max-width: 120px;
+      height: auto;
+    }
+
+    #qrcode img {
+      margin: 0 auto;
+    }
+
+    .search-bar {
+      margin-bottom: 2rem;
+      display: flex;
+      gap: 1rem;
+    }
+
+    /* Mensaje de Restricción / Login Screen */
+    .access-denied-container {
+      text-align: center;
+      padding: 4rem 1rem;
+      max-width: 450px;
+      margin: 0 auto;
+    }
+
+    .access-denied-icon {
+      font-size: 4rem;
+      color: var(--primary-red);
+      margin-bottom: 1rem;
+      text-shadow: 0 0 20px var(--red-glow);
+    }
+
+    .access-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .access-subtitle {
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      border-top: 1px solid var(--border-color);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-top: auto;
+    }
+
+    /* Responsivo */
+    @media (max-width: 600px) {
+      .header-container { flex-direction: column; text-align: center; }
+      .qr-display-container { flex-direction: column; gap: 1rem; }
+      .search-bar { flex-direction: column; }
+    }
+  </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between antialiased selection:bg-cyber-red selection:text-white pb-10">
+<body>
 
-    <!-- HEADER NAVBAR -->
-    <header class="sticky top-0 z-40 bg-cyber-black/90 backdrop-blur-md border-b border-cyber-red/30 shadow-lg">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <!-- Brand Logo & Title -->
-            <div class="flex items-center space-x-3 cursor-pointer" onclick="app.handleHomeClick()">
-                <div class="relative w-12 h-12 rounded-full border-2 border-cyber-red p-1 bg-cyber-dark shadow-neon-red flex items-center justify-center overflow-hidden">
-                    <svg viewBox="0 0 200 200" class="w-full h-full">
-                        <circle cx="100" cy="100" r="90" fill="#0d0d0d" stroke="#ff1a3c" stroke-width="6"/>
-                        <path d="M 40 120 A 70 70 0 1 1 160 120" fill="none" stroke="#e6e6e6" stroke-width="8" stroke-dasharray="8 4"/>
-                        <path d="M 130 60 L 100 100" stroke="#ff1a3c" stroke-width="6" stroke-linecap="round"/>
-                        <path d="M 60 140 L 140 60 M 140 140 L 60 60" stroke="#888" stroke-width="10" stroke-linecap="round"/>
-                        <rect x="88" y="70" width="24" height="35" rx="3" fill="#d0d0d0" stroke="#111" stroke-width="2"/>
-                        <circle cx="100" cy="85" r="5" fill="#111"/>
-                    </svg>
-                </div>
-                <div>
-                    <h1 class="font-tech text-lg sm:text-xl font-black tracking-wider chrome-text uppercase leading-none">
-                        EL POBRE JOSÉ
-                    </h1>
-                    <span class="text-xs font-semibold tracking-widest text-cyber-red uppercase glow-text-red block mt-0.5">
-                        <i class="fa-solid fa-wrench mr-1"></i> Taller Mecánico
-                    </span>
-                </div>
-            </div>
-
-            <!-- Controls & Admin Status -->
-            <div class="flex items-center space-x-3">
-                <span id="adminBadge" class="hidden text-xs font-tech font-bold px-3 py-1 rounded-full bg-cyber-red/20 text-cyber-red border border-cyber-red animate-pulse">
-                    <i class="fa-solid fa-user-shield mr-1"></i> PANEL ADMIN
-                </span>
-
-                <button id="authBtn" onclick="app.handleAuthAction()" class="px-4 py-2 text-xs sm:text-sm font-tech font-bold rounded-lg border border-cyber-red/50 bg-gradient-to-r from-cyber-card to-cyber-dark hover:border-cyber-red hover:shadow-neon-red transition-all duration-300 text-white flex items-center space-x-2">
-                    <i id="authIcon" class="fa-solid fa-lock"></i>
-                    <span id="authText">ACCESO ADMIN</span>
-                </button>
-            </div>
+  <!-- Header principal -->
+  <header>
+    <div class="header-container">
+      <div class="logo-container" onclick="resetToHome()">
+        <img src="https://i.ibb.co/L89Y32C/WhatsApp-Image-2026-10-05-at-6-59-50-PM.jpg" alt="El Pobre José Logo" class="logo-img">
+        <div>
+          <div class="brand-title">El Pobre José</div>
+          <div class="brand-subtitle">TALLER MECÁNICO</div>
         </div>
-    </header>
+      </div>
+      <div class="admin-controls" id="adminControls">
+        <!-- Se llena con JS según el estado de sesión -->
+      </div>
+    </div>
+  </header>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 flex-grow w-full">
+  <main id="mainContainer">
+    <!-- El contenido se inyecta dinámicamente -->
+  </main>
+
+  <!-- Modal Login -->
+  <div class="modal" id="loginModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title"><i class="fas fa-lock"></i> Acceso Administrativo</h3>
+        <button class="close-modal" onclick="closeModal('loginModal')">&times;</button>
+      </div>
+      <form onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label>Usuario</label>
+          <input type="text" id="loginUser" class="form-control" required placeholder="Ingresa usuario">
+        </div>
+        <div class="form-group">
+          <label>Contraseña</label>
+          <input type="password" id="loginPass" class="form-control" required placeholder="Ingresa contraseña">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Iniciar Sesión</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Agregar / Editar Vehículo -->
+  <div class="modal" id="vehicleModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="vehicleModalTitle">Agregar Vehículo</h3>
+        <button class="close-modal" onclick="closeModal('vehicleModal')">&times;</button>
+      </div>
+      <form onsubmit="saveVehicle(event)">
+        <input type="hidden" id="vehId">
+        <div class="form-group">
+          <label>Modelo / Auto</label>
+          <input type="text" id="vehModel" class="form-control" placeholder="Ej: Toyota Hilux 2.4" required>
+        </div>
+        <div class="form-group">
+          <label>Patente / Dominio</label>
+          <input type="text" id="vehPlate" class="form-control" placeholder="Ej: BB-CL-10" required>
+        </div>
+        <div class="form-group">
+          <label>Foto del Vehículo</label>
+          <input type="file" id="vehFoto" class="form-control" accept="image/*" onchange="previewImage(event)">
+          <input type="hidden" id="vehFotoBase64">
+        </div>
+        <div class="form-group">
+          <label>Kilometraje Actual (KM)</label>
+          <input type="number" id="vehKm" class="form-control" placeholder="Ej: 125000" required>
+        </div>
+        <div class="form-group">
+          <label>Cambio de Aceite Realizado</label>
+          <input type="text" id="vehOil" class="form-control" placeholder="Ej: 10W-40 Sintético + Filtro" required>
+        </div>
+        <div class="form-group">
+          <label>Filtros Cambiados</label>
+          <input type="text" id="vehFilters" class="form-control" placeholder="Ej: Aceite, Aire y Polencito">
+        </div>
+        <div class="form-group">
+          <label>Próximo Servicio Recomendado</label>
+          <input type="text" id="vehNextService" class="form-control" placeholder="Ej: A los 135,000 KM o en 6 meses" required>
+        </div>
+        <div class="form-group">
+          <label>Notas Opcionales / Observaciones</label>
+          <textarea id="vehNotes" class="form-control" placeholder="Ej: Se observa ligera sudoración en empaque de punterías."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Guardar Registro</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Código QR -->
+  <div class="modal" id="qrModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title"><i class="fas fa-qrcode"></i> Ficha QR - Vehículo</h3>
+        <button class="close-modal" onclick="closeModal('qrModal')">&times;</button>
+      </div>
+      <div class="qr-modal-body">
+        <p style="color: var(--text-muted); font-size: 0.9rem;">Escanea este código o abre el enlace para acceder a la ficha técnica guardada:</p>
         
-        <!-- ADMIN SEARCH & ACTIONS BAR (Visible only when Admin) -->
-        <div id="catalogBar" class="hidden flex-col md:flex-row justify-between items-stretch md:items-center gap-4 mb-8 bg-cyber-card/80 p-4 rounded-xl border border-cyber-border/60 backdrop-blur">
-            <div class="relative flex-grow max-w-md">
-                <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                <input type="text" id="searchInput" oninput="app.filterVehicles()" placeholder="Buscar por Placa, Cliente o Modelo..." class="w-full pl-10 pr-4 py-2.5 bg-cyber-dark/90 border border-cyber-border rounded-lg text-sm text-white placeholder-gray-500 focus:outline-none focus:border-cyber-red focus:ring-1 focus:ring-cyber-red transition-all">
-            </div>
-
-            <div class="flex items-center gap-3">
-                <button onclick="app.openVehicleModal()" class="w-full md:w-auto px-5 py-2.5 bg-gradient-to-r from-cyber-red to-red-700 hover:from-red-600 hover:to-cyber-red text-white font-tech font-bold text-xs uppercase tracking-wider rounded-lg shadow-neon-red transition-all duration-300 flex items-center justify-center space-x-2">
-                    <i class="fa-solid fa-plus text-sm"></i>
-                    <span>Nuevo Vehículo</span>
-                </button>
-            </div>
+        <!-- Tarjeta QR + Logo -->
+        <div class="qr-display-container">
+          <img src="https://i.ibb.co/L89Y32C/WhatsApp-Image-2026-10-05-at-6-59-50-PM.jpg" alt="Logo Taller" class="qr-logo">
+          <div id="qrcode"></div>
         </div>
 
-        <!-- MAIN CONTENT AREA (Login Gate / Admin Catalog / Public Single Vehicle) -->
-        <div id="contentArea"></div>
-
-    </main>
-
-    <!-- VEHICLE FORM MODAL (ADD / EDIT) -->
-    <div id="vehicleModal" class="fixed inset-0 z-50 hidden modal-blur bg-black/80 flex items-center justify-center p-4 overflow-y-auto">
-        <div class="bg-cyber-card border-2 border-cyber-red/80 rounded-2xl w-full max-w-2xl my-8 p-6 sm:p-8 shadow-neon-red relative">
-            <button onclick="app.closeVehicleModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
-                <i class="fa-solid fa-xmark text-2xl"></i>
-            </button>
-
-            <div class="flex items-center space-x-3 mb-6 pb-3 border-b border-cyber-border">
-                <i class="fa-solid fa-car-wrench text-2xl text-cyber-red"></i>
-                <h3 id="modalTitle" class="font-tech text-xl font-bold text-white uppercase tracking-wider">Registrar Nuevo Vehículo</h3>
-            </div>
-
-            <form onsubmit="app.saveVehicle(event)" class="space-y-4">
-                <input type="hidden" id="vehicleId">
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-tech text-gray-300 mb-1">PLACA / PATENTE *</label>
-                        <input type="text" id="vPlate" required placeholder="Ej: ABC-1234" class="w-full px-3 py-2 bg-cyber-dark border border-cyber-border rounded text-sm text-white uppercase focus:border-cyber-red focus:outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-tech text-gray-300 mb-1">PROPIETARIO / CLIENTE *</label>
-                        <input type="text" id="vOwner" required placeholder="Nombre completo" class="w-full px-3 py-2 bg-cyber-dark border border-cyber-border rounded text-sm text-white focus:border-cyber-red focus:outline-none">
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-tech text-gray-300 mb-1">MARCA Y MODELO *</label>
-                        <input type="text" id="vModel" required placeholder="Ej: Toyota Corolla 2021" class="w-full px-3 py-2 bg-cyber-dark border border-cyber-border rounded text-sm text-white focus:border-cyber-red focus:outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-tech text-gray-300 mb-1">KILOMETRAJE ACTUAL (KM) *</label>
-                        <input type="number" id="vMileage" required placeholder="Ej: 85000" class="w-full px-3 py-2 bg-cyber-dark border border-cyber-border rounded text-sm text-white focus:border-cyber-red focus:outline-none">
-                    </div>
-                </div>
-
-                <!-- Vehicle Photo Upload -->
-                <div>
-                    <label class="block text-xs font-tech text-gray-300 mb-1">FOTO DEL VEHÍCULO</label>
-                    <div class="flex items-center space-x-4">
-                        <div class="relative w-24 h-24 bg-cyber-dark border border-dashed border-cyber-border rounded-lg overflow-hidden flex items-center justify-center shrink-0">
-                            <img id="vPhotoPreview" class="w-full h-full object-cover hidden" alt="Vista previa">
-                            <i id="vPhotoPlaceholder" class="fa-solid fa-camera text-2xl text-gray-600"></i>
-                        </div>
-                        <div class="flex-grow">
-                            <input type="file" id="vPhotoInput" accept="image/*" onchange="app.handlePhotoUpload(event)" class="hidden">
-                            <button type="button" onclick="document.getElementById('vPhotoInput').click()" class="px-4 py-2 bg-cyber-dark border border-cyber-border hover:border-cyber-red rounded text-xs font-tech text-white transition-all">
-                                <i class="fa-solid fa-upload mr-1"></i> Seleccionar Imagen
-                            </button>
-                            <p class="text-[10px] text-gray-500 mt-1">Soporta JPG, PNG (se guardará de forma local).</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 border-t border-cyber-border/40">
-                    <div>
-                        <label class="block text-xs font-tech text-gray-300 mb-1">CAMBIO DE ACEITE</label>
-                        <input type="text" id="vOilChange" placeholder="Ej: Sintético 5W-30 + Filtro" class="w-full px-3 py-2 bg-cyber-dark border border-cyber-border rounded text-sm text-white focus:border-cyber-red focus:outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-tech text-gray-300 mb-1">FILTROS REEMPLAZADOS</label>
-                        <input type="text" id="vFilters" placeholder="Ej: Aire, Aceite y Cabina" class="w-full px-3 py-2 bg-cyber-dark border border-cyber-border rounded text-sm text-white focus:border-cyber-red focus:outline-none">
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-tech text-gray-300 mb-1">PRÓXIMO SERVICIO (KM / FECHA)</label>
-                        <input type="text" id="vNextService" placeholder="Ej: 95,000 KM o 15/12/2026" class="w-full px-3 py-2 bg-cyber-dark border border-cyber-border rounded text-sm text-white focus:border-cyber-red focus:outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-tech text-gray-300 mb-1">FECHA DE ATENCIÓN</label>
-                        <input type="date" id="vDate" class="w-full px-3 py-2 bg-cyber-dark border border-cyber-border rounded text-sm text-white focus:border-cyber-red focus:outline-none">
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-tech text-gray-300 mb-1">NOTAS OPCIONALES / OBSERVACIONES</label>
-                    <textarea id="vNotes" rows="2" placeholder="Detalles de frenos, suspensión, fugas u otras revisiones..." class="w-full px-3 py-2 bg-cyber-dark border border-cyber-border rounded text-sm text-white focus:border-cyber-red focus:outline-none"></textarea>
-                </div>
-
-                <div class="flex justify-end space-x-3 pt-4 border-t border-cyber-border">
-                    <button type="button" onclick="app.closeVehicleModal()" class="px-5 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 font-tech text-xs uppercase rounded">Cancelar</button>
-                    <button type="submit" class="px-6 py-2 bg-cyber-red hover:bg-red-600 text-white font-tech text-xs uppercase font-bold rounded shadow-neon-red">Guardar Registro</button>
-                </div>
-            </form>
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; width: 100%;">
+          <button class="btn btn-primary" onclick="openQrUrl()"><i class="fas fa-external-link-alt"></i> Abrir Ficha</button>
+          <button class="btn" onclick="copyQrUrl()"><i class="fas fa-copy"></i> Copiar Enlace</button>
         </div>
+      </div>
     </div>
-
-    <!-- QR CODE MODAL WITH BRAND LOGO SIDE BY SIDE -->
-    <div id="qrModal" class="fixed inset-0 z-50 hidden modal-blur bg-black/85 flex items-center justify-center p-4">
-        <div class="bg-cyber-card border-2 border-cyber-red/80 rounded-2xl w-full max-w-xl p-6 sm:p-8 shadow-neon-red relative">
-            <button onclick="app.closeQRModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
-                <i class="fa-solid fa-xmark text-2xl"></i>
-            </button>
-
-            <div class="text-center mb-4">
-                <h3 class="font-tech text-lg sm:text-xl font-bold text-white uppercase tracking-wider">Código QR de Ficha Técnica</h3>
-                <p class="text-xs text-gray-400">Escanee para abrir la página pública dedicada de este vehículo</p>
-            </div>
-
-            <div class="bg-cyber-dark border border-cyber-border p-6 rounded-xl relative overflow-hidden mb-6">
-                <div class="flex flex-col sm:flex-row items-center justify-around gap-6">
-                    <!-- Left Side: Workshop Logo Branding -->
-                    <div class="flex flex-col items-center text-center max-w-[200px]">
-                        <div class="w-20 h-20 rounded-full border-2 border-cyber-red p-1 bg-black shadow-neon-red mb-2 flex items-center justify-center">
-                            <svg viewBox="0 0 200 200" class="w-full h-full">
-                                <circle cx="100" cy="100" r="90" fill="#0d0d0d" stroke="#ff1a3c" stroke-width="6"/>
-                                <path d="M 40 120 A 70 70 0 1 1 160 120" fill="none" stroke="#e6e6e6" stroke-width="8" stroke-dasharray="8 4"/>
-                                <path d="M 130 60 L 100 100" stroke="#ff1a3c" stroke-width="6" stroke-linecap="round"/>
-                                <path d="M 60 140 L 140 60 M 140 140 L 60 60" stroke="#888" stroke-width="10" stroke-linecap="round"/>
-                                <rect x="88" y="70" width="24" height="35" rx="3" fill="#d0d0d0" stroke="#111" stroke-width="2"/>
-                            </svg>
-                        </div>
-                        <span class="font-tech text-sm font-black text-white uppercase tracking-wide">EL POBRE JOSÉ</span>
-                        <span class="text-[10px] font-bold text-cyber-red tracking-widest uppercase">Taller Mecánico</span>
-                        <span id="qrVehiclePlate" class="mt-3 px-3 py-1 bg-cyber-red/20 border border-cyber-red text-cyber-red font-tech font-bold text-xs rounded">---</span>
-                    </div>
-
-                    <div class="hidden sm:block w-px h-32 bg-cyber-border"></div>
-
-                    <!-- Right Side: Generated QR Code -->
-                    <div class="flex flex-col items-center">
-                        <div id="qrcode" class="p-3 bg-white rounded-lg shadow-lg border-2 border-cyber-red"></div>
-                        <span class="text-[10px] text-gray-400 mt-2 font-mono">Página Única del Vehículo</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="flex flex-wrap gap-3 justify-center">
-                <button onclick="app.openVehicleInNewTab()" class="px-4 py-2.5 bg-gradient-to-r from-cyber-red to-red-700 hover:from-red-600 hover:to-cyber-red text-white font-tech text-xs font-bold rounded shadow-neon-red flex items-center space-x-2">
-                    <i class="fa-solid fa-up-right-from-square"></i>
-                    <span>Abrir en Nueva Pestaña</span>
-                </button>
-                <button onclick="app.copyQRLink()" class="px-4 py-2.5 bg-cyber-dark border border-cyber-red hover:bg-cyber-red text-white font-tech text-xs rounded flex items-center space-x-2">
-                    <i class="fa-solid fa-link"></i>
-                    <span>Copiar Enlace</span>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- JAVASCRIPT LOGIC -->
-    <script>
-        class MechanicalApp {
-            constructor() {
-                this.isAdmin = false;
-                this.vehicles = [];
-                this.currentPhotoBase64 = '';
-                this.activeVehicleIdForQR = null;
-                this.init();
-            }
-
-            init() {
-                // Check if admin is logged in from session
-                if (sessionStorage.getItem('pobreJose_admin') === 'true') {
-                    this.isAdmin = true;
-                    this.updateAdminUI(true);
-                }
-
-                // Load stored vehicles
-                const savedVehicles = localStorage.getItem('pobreJose_vehicles');
-                if (savedVehicles) {
-                    this.vehicles = JSON.parse(savedVehicles);
-                } else {
-                    // Seed initial demo vehicle
-                    this.vehicles = [
-                        {
-                            id: 'v1',
-                            plate: 'ABC-789',
-                            owner: 'Carlos Mendoza',
-                            model: 'Toyota Hilux 2.8 TURBO',
-                            mileage: 125000,
-                            oilChange: 'Sintético 5W-30 Mobil 1',
-                            filters: 'Filtro Aceite + Filtro Combustible Diésel',
-                            nextService: '135,000 KM o Nov/2026',
-                            date: '2026-10-01',
-                            notes: 'Se realizó purga del sistema de frenos y rotación de neumáticos.',
-                            photo: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=600&q=80'
-                        }
-                    ];
-                    this.saveToStorage();
-                }
-
-                window.addEventListener('popstate', () => this.handleRouting());
-                this.handleRouting();
-            }
-
-            saveToStorage() {
-                localStorage.setItem('pobreJose_vehicles', JSON.stringify(this.vehicles));
-            }
-
-            updateAdminUI(isLoggedIn) {
-                const adminBadge = document.getElementById('adminBadge');
-                const catalogBar = document.getElementById('catalogBar');
-                const authText = document.getElementById('authText');
-                const authIcon = document.getElementById('authIcon');
-
-                if (isLoggedIn) {
-                    adminBadge.classList.remove('hidden');
-                    catalogBar.classList.remove('hidden');
-                    catalogBar.classList.add('flex');
-                    authText.innerText = 'CERRAR SESIÓN';
-                    authIcon.className = 'fa-solid fa-right-from-bracket';
-                } else {
-                    adminBadge.classList.add('hidden');
-                    catalogBar.classList.add('hidden');
-                    catalogBar.classList.remove('flex');
-                    authText.innerText = 'ACCESO ADMIN';
-                    authIcon.className = 'fa-solid fa-lock';
-                }
-            }
-
-            // ROUTING SYSTEM
-            handleRouting() {
-                const urlParams = new URLSearchParams(window.location.search);
-                const targetId = urlParams.get('v');
-
-                if (targetId) {
-                    // A specific vehicle URL is requested -> Render public view for client
-                    document.getElementById('catalogBar').classList.add('hidden');
-                    document.getElementById('catalogBar').classList.remove('flex');
-                    this.renderSingleVehicleView(targetId);
-                } else {
-                    // Root / Catalog requested
-                    if (this.isAdmin) {
-                        document.getElementById('catalogBar').classList.remove('hidden');
-                        document.getElementById('catalogBar').classList.add('flex');
-                        this.renderVehicleList();
-                    } else {
-                        // Restricted view -> Show Admin Login Screen
-                        document.getElementById('catalogBar').classList.add('hidden');
-                        document.getElementById('catalogBar').classList.remove('flex');
-                        this.renderAdminLoginGate();
-                    }
-                }
-            }
-
-            handleHomeClick() {
-                window.history.pushState({}, document.title, window.location.pathname);
-                this.handleRouting();
-            }
-
-            handleAuthAction() {
-                if (this.isAdmin) {
-                    // Logout
-                    this.isAdmin = false;
-                    sessionStorage.removeItem('pobreJose_admin');
-                    this.updateAdminUI(false);
-                    this.handleHomeClick();
-                } else {
-                    // Navigate to home to show login screen if not already there
-                    this.handleHomeClick();
-                }
-            }
-
-            handleLoginSubmit(e) {
-                e.preventDefault();
-                const user = document.getElementById('loginUser').value;
-                const pass = document.getElementById('loginPass').value;
-
-                if (user === 'admin' && pass === 'admin') {
-                    this.isAdmin = true;
-                    sessionStorage.setItem('pobreJose_admin', 'true');
-                    this.updateAdminUI(true);
-                    this.renderVehicleList();
-                } else {
-                    const errorEl = document.getElementById('loginError');
-                    if (errorEl) errorEl.classList.remove('hidden');
-                }
-            }
-
-            renderAdminLoginGate() {
-                const container = document.getElementById('contentArea');
-                container.innerHTML = `
-                    <div class="max-w-md mx-auto my-12 bg-cyber-card border-2 border-cyber-red/80 rounded-2xl p-6 sm:p-8 shadow-neon-red relative overflow-hidden">
-                        <div class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-cyber-red via-gray-300 to-cyber-red"></div>
-
-                        <div class="text-center mb-6">
-                            <div class="w-20 h-20 mx-auto mb-4 rounded-full bg-cyber-dark border-2 border-cyber-red flex items-center justify-center text-cyber-red text-3xl shadow-neon-red">
-                                <i class="fa-solid fa-user-gear"></i>
-                            </div>
-                            <h3 class="font-tech text-xl font-bold text-white uppercase tracking-wider">Acceso Restringido</h3>
-                            <p class="text-xs text-gray-400 mt-1">El catálogo completo solo es accesible para personal del taller.</p>
-                        </div>
-
-                        <form onsubmit="app.handleLoginSubmit(event)" class="space-y-4">
-                            <div>
-                                <label class="block text-xs font-tech text-gray-300 mb-1 uppercase">Usuario</label>
-                                <div class="relative">
-                                    <i class="fa-solid fa-user absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"></i>
-                                    <input type="text" id="loginUser" required class="w-full pl-10 pr-4 py-2.5 bg-cyber-dark border border-cyber-border rounded-lg text-sm text-white focus:outline-none focus:border-cyber-red">
-                                </div>
-                            </div>
-
-                            <div>
-                                <label class="block text-xs font-tech text-gray-300 mb-1 uppercase">Contraseña</label>
-                                <div class="relative">
-                                    <i class="fa-solid fa-key absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"></i>
-                                    <input type="password" id="loginPass" required class="w-full pl-10 pr-4 py-2.5 bg-cyber-dark border border-cyber-border rounded-lg text-sm text-white focus:outline-none focus:border-cyber-red">
-                                </div>
-                            </div>
-
-                            <div id="loginError" class="hidden text-xs text-cyber-red font-semibold text-center bg-cyber-red/10 py-2 rounded border border-cyber-red/30">
-                                Credenciales incorrectas (Default: admin / admin)
-                            </div>
-
-                            <button type="submit" class="w-full py-3 bg-gradient-to-r from-cyber-red to-red-700 hover:from-red-600 hover:to-cyber-red text-white font-tech font-bold rounded-lg shadow-neon-red transition-all duration-300 uppercase text-sm tracking-wider mt-4">
-                                Ingresar al Panel Taller
-                            </button>
-                        </form>
-
-                        <div class="mt-6 text-center text-[11px] text-gray-500 font-tech">
-                            ¿Es cliente? Escanee el código QR provisto en su ficha técnica para consultar su vehículo.
-                        </div>
-                    </div>
-                `;
-            }
-
-            renderVehicleList(vehiclesToRender = this.vehicles) {
-                const container = document.getElementById('contentArea');
-
-                if (vehiclesToRender.length === 0) {
-                    container.innerHTML = `
-                        <div class="text-center py-16 bg-cyber-card/40 rounded-2xl border border-cyber-border">
-                            <i class="fa-solid fa-car-rear text-5xl text-gray-600 mb-4"></i>
-                            <h3 class="font-tech text-lg text-white uppercase">No hay vehículos registrados</h3>
-                            <p class="text-xs text-gray-400 mt-1">Presione "Nuevo Vehículo" para añadir el primer registro.</p>
-                        </div>
-                    `;
-                    return;
-                }
-
-                let html = `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">`;
-
-                vehiclesToRender.forEach(v => {
-                    html += `
-                        <div class="bg-cyber-card border border-cyber-border hover:border-cyber-red/60 rounded-xl overflow-hidden transition-all duration-300 hover:shadow-neon-red flex flex-col justify-between group">
-                            
-                            <div class="relative h-48 bg-cyber-dark overflow-hidden">
-                                <img src="${v.photo || 'https://placehold.co/600x400/161b22/ff1a3c?text=Vehiculo'}" alt="${v.model}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                                <div class="absolute inset-0 bg-gradient-to-t from-cyber-card via-transparent to-black/60"></div>
-                                
-                                <div class="absolute top-3 left-3 bg-cyber-black/90 border border-cyber-red text-white font-tech font-bold text-xs px-3 py-1 rounded shadow">
-                                    <i class="fa-solid fa-id-card text-cyber-red mr-1"></i> ${v.plate}
-                                </div>
-
-                                <div class="absolute top-3 right-3 flex space-x-1">
-                                    <button onclick="app.generateQR('${v.id}')" title="Generar QR" class="w-8 h-8 rounded-full bg-cyber-dark/80 hover:bg-cyber-red text-white border border-cyber-border flex items-center justify-center transition">
-                                        <i class="fa-solid fa-qrcode text-xs"></i>
-                                    </button>
-                                    <button onclick="app.openVehicleModal('${v.id}')" title="Editar" class="w-8 h-8 rounded-full bg-cyber-dark/80 hover:bg-blue-600 text-white border border-cyber-border flex items-center justify-center transition">
-                                        <i class="fa-solid fa-pen text-xs"></i>
-                                    </button>
-                                    <button onclick="app.deleteVehicle('${v.id}')" title="Eliminar" class="w-8 h-8 rounded-full bg-cyber-dark/80 hover:bg-red-600 text-white border border-cyber-border flex items-center justify-center transition">
-                                        <i class="fa-solid fa-trash text-xs"></i>
-                                    </button>
-                                </div>
-
-                                <div class="absolute bottom-3 left-3 right-3">
-                                    <h3 class="font-tech text-lg font-bold text-white truncate">${v.model}</h3>
-                                    <p class="text-xs text-gray-300"><i class="fa-solid fa-user text-cyber-red mr-1"></i> ${v.owner}</p>
-                                </div>
-                            </div>
-
-                            <div class="p-4 space-y-3 flex-grow text-xs">
-                                <div class="flex justify-between items-center py-1.5 border-b border-cyber-border/40">
-                                    <span class="text-gray-400 font-tech"><i class="fa-solid fa-gauge-high text-cyber-red mr-1"></i> Kilometraje:</span>
-                                    <span class="font-bold text-white font-mono">${Number(v.mileage).toLocaleString()} KM</span>
-                                </div>
-
-                                <div class="py-1 border-b border-cyber-border/40">
-                                    <span class="text-gray-400 font-tech block mb-0.5"><i class="fa-solid fa-oil-can text-cyber-red mr-1"></i> Cambio Aceite:</span>
-                                    <span class="text-gray-200">${v.oilChange || 'No registrado'}</span>
-                                </div>
-
-                                <div class="py-1 border-b border-cyber-border/40">
-                                    <span class="text-gray-400 font-tech block mb-0.5"><i class="fa-solid fa-filter text-cyber-red mr-1"></i> Filtros:</span>
-                                    <span class="text-gray-200">${v.filters || 'No registrado'}</span>
-                                </div>
-
-                                <div class="py-1 border-b border-cyber-border/40">
-                                    <span class="text-gray-400 font-tech block mb-0.5"><i class="fa-solid fa-calendar-check text-cyber-red mr-1"></i> Próximo Servicio:</span>
-                                    <span class="text-cyber-red font-bold">${v.nextService || 'Pendiente'}</span>
-                                </div>
-
-                                ${v.notes ? `
-                                    <div class="pt-1">
-                                        <span class="text-gray-400 font-tech block mb-0.5"><i class="fa-solid fa-note-sticky text-cyber-red mr-1"></i> Notas:</span>
-                                        <p class="text-gray-300 italic bg-cyber-dark/50 p-2 rounded border border-cyber-border/30 line-clamp-2">${v.notes}</p>
-                                    </div>
-                                ` : ''}
-                            </div>
-
-                            <div class="p-3 bg-cyber-dark/60 border-t border-cyber-border/60 flex justify-between items-center text-[10px] text-gray-400">
-                                <span>Atendido: ${v.date || 'Reciente'}</span>
-                                <button onclick="app.navigateToVehicle('${v.id}')" class="text-cyber-red font-tech hover:underline flex items-center">
-                                    Ver Ficha Pública <i class="fa-solid fa-arrow-right ml-1"></i>
-                                </button>
-                            </div>
-
-                        </div>
-                    `;
-                });
-
-                html += `</div>`;
-                container.innerHTML = html;
-            }
-
-            renderSingleVehicleView(id) {
-                const vehicle = this.vehicles.find(v => v.id === id);
-                const container = document.getElementById('contentArea');
-
-                if (!vehicle) {
-                    container.innerHTML = `
-                        <div class="text-center py-16 bg-cyber-card rounded-xl border border-cyber-red">
-                            <i class="fa-solid fa-triangle-exclamation text-4xl text-cyber-red mb-3"></i>
-                            <h2 class="font-tech text-xl text-white">Vehículo no encontrado</h2>
-                            <p class="text-xs text-gray-400 mt-1">El código QR o enlace ingresado es inválido.</p>
-                        </div>
-                    `;
-                    return;
-                }
-
-                container.innerHTML = `
-                    <div class="max-w-3xl mx-auto bg-cyber-card border-2 border-cyber-red/80 rounded-2xl overflow-hidden shadow-neon-red-lg">
-                        <div class="p-4 bg-cyber-dark border-b border-cyber-border flex justify-between items-center">
-                            <span class="text-xs font-tech text-gray-400">
-                                <i class="fa-solid fa-shield-halved text-cyber-red mr-1"></i> FICHA TÉCNICA OFICIAL
-                            </span>
-                            ${this.isAdmin ? `
-                                <button onclick="app.openVehicleModal('${vehicle.id}')" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white font-tech text-xs rounded">
-                                    <i class="fa-solid fa-pen mr-1"></i> Editar Registro
-                                </button>
-                            ` : ''}
-                        </div>
-
-                        <div class="relative h-64 sm:h-80 bg-black">
-                            <img src="${vehicle.photo || 'https://placehold.co/800x500/161b22/ff1a3c?text=Vehiculo'}" class="w-full h-full object-cover">
-                            <div class="absolute inset-0 bg-gradient-to-t from-cyber-card via-black/40 to-transparent"></div>
-                            
-                            <div class="absolute bottom-4 left-4 right-4 flex flex-col sm:flex-row justify-between sm:items-end gap-2">
-                                <div>
-                                    <span class="bg-cyber-red text-white font-tech font-bold text-sm px-3 py-1 rounded shadow">
-                                        ${vehicle.plate}
-                                    </span>
-                                    <h2 class="font-tech text-2xl sm:text-3xl font-black text-white mt-2">${vehicle.model}</h2>
-                                    <p class="text-sm text-gray-300"><i class="fa-solid fa-user text-cyber-red mr-1"></i> Propietario: ${vehicle.owner}</p>
-                                </div>
-                                <div class="bg-cyber-dark/90 border border-cyber-border p-3 rounded-lg text-right">
-                                    <span class="text-[10px] text-gray-400 font-tech uppercase block">Kilometraje Actual</span>
-                                    <span class="font-tech text-xl text-cyber-red font-bold">${Number(vehicle.mileage).toLocaleString()} KM</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="p-6 space-y-6">
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <div class="bg-cyber-dark border border-cyber-border p-4 rounded-xl">
-                                    <div class="flex items-center space-x-2 text-cyber-red mb-2">
-                                        <i class="fa-solid fa-oil-can text-lg"></i>
-                                        <h4 class="font-tech font-bold text-sm text-white uppercase">Cambio de Aceite</h4>
-                                    </div>
-                                    <p class="text-sm text-gray-200">${vehicle.oilChange || 'Sin registro'}</p>
-                                </div>
-
-                                <div class="bg-cyber-dark border border-cyber-border p-4 rounded-xl">
-                                    <div class="flex items-center space-x-2 text-cyber-red mb-2">
-                                        <i class="fa-solid fa-filter text-lg"></i>
-                                        <h4 class="font-tech font-bold text-sm text-white uppercase">Filtros Reemplazados</h4>
-                                    </div>
-                                    <p class="text-sm text-gray-200">${vehicle.filters || 'Sin registro'}</p>
-                                </div>
-                            </div>
-
-                            <div class="bg-cyber-dark border border-cyber-red/40 p-4 rounded-xl flex items-center justify-between">
-                                <div class="flex items-center space-x-3">
-                                    <div class="w-10 h-10 rounded-full bg-cyber-red/20 border border-cyber-red flex items-center justify-center text-cyber-red">
-                                        <i class="fa-solid fa-calendar-day"></i>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-tech font-bold text-xs text-gray-400 uppercase">Próximo Mantenimiento</h4>
-                                        <p class="font-tech text-base text-cyber-red font-bold">${vehicle.nextService || 'No programado'}</p>
-                                    </div>
-                                </div>
-                                <span class="text-xs text-gray-400">Atendido: ${vehicle.date || 'N/A'}</span>
-                            </div>
-
-                            ${vehicle.notes ? `
-                                <div class="bg-cyber-dark border border-cyber-border p-4 rounded-xl">
-                                    <h4 class="font-tech font-bold text-xs text-gray-400 uppercase mb-2">Observaciones Taller</h4>
-                                    <p class="text-sm text-gray-300 italic whitespace-pre-line">${vehicle.notes}</p>
-                                </div>
-                            ` : ''}
-
-                            <div class="pt-4 border-t border-cyber-border flex justify-between items-center">
-                                <button onclick="app.generateQR('${vehicle.id}')" class="px-4 py-2 bg-cyber-dark border border-cyber-red text-white font-tech text-xs rounded hover:bg-cyber-red transition">
-                                    <i class="fa-solid fa-qrcode mr-1"></i> Ver Código QR
-                                </button>
-                                
-                                <span class="text-[10px] text-gray-500 font-tech">EL POBRE JOSÉ - TALLER MECÁNICO</span>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }
-
-            navigateToVehicle(id) {
-                const newUrl = `${window.location.pathname}?v=${id}`;
-                window.history.pushState({ vehicleId: id }, '', newUrl);
-                this.handleRouting();
-            }
-
-            filterVehicles() {
-                const query = document.getElementById('searchInput').value.toLowerCase();
-                const filtered = this.vehicles.filter(v => 
-                    v.plate.toLowerCase().includes(query) ||
-                    v.owner.toLowerCase().includes(query) ||
-                    v.model.toLowerCase().includes(query)
-                );
-                this.renderVehicleList(filtered);
-            }
-
-            // MODAL FORM MANAGEMENT
-            openVehicleModal(id = null) {
-                const modal = document.getElementById('vehicleModal');
-                const title = document.getElementById('modalTitle');
-                
-                if (id) {
-                    const vehicle = this.vehicles.find(v => v.id === id);
-                    title.innerText = 'Editar Registro de Vehículo';
-                    document.getElementById('vehicleId').value = vehicle.id;
-                    document.getElementById('vPlate').value = vehicle.plate;
-                    document.getElementById('vOwner').value = vehicle.owner;
-                    document.getElementById('vModel').value = vehicle.model;
-                    document.getElementById('vMileage').value = vehicle.mileage;
-                    document.getElementById('vOilChange').value = vehicle.oilChange;
-                    document.getElementById('vFilters').value = vehicle.filters;
-                    document.getElementById('vNextService').value = vehicle.nextService;
-                    document.getElementById('vDate').value = vehicle.date;
-                    document.getElementById('vNotes').value = vehicle.notes;
-
-                    if (vehicle.photo) {
-                        this.currentPhotoBase64 = vehicle.photo;
-                        document.getElementById('vPhotoPreview').src = vehicle.photo;
-                        document.getElementById('vPhotoPreview').classList.remove('hidden');
-                        document.getElementById('vPhotoPlaceholder').classList.add('hidden');
-                    }
-                } else {
-                    title.innerText = 'Registrar Nuevo Vehículo';
-                    document.getElementById('vehicleId').value = '';
-                    document.getElementById('vPlate').value = '';
-                    document.getElementById('vOwner').value = '';
-                    document.getElementById('vModel').value = '';
-                    document.getElementById('vMileage').value = '';
-                    document.getElementById('vOilChange').value = '';
-                    document.getElementById('vFilters').value = '';
-                    document.getElementById('vNextService').value = '';
-                    document.getElementById('vDate').value = new Date().toISOString().split('T')[0];
-                    document.getElementById('vNotes').value = '';
-                    this.currentPhotoBase64 = '';
-                    document.getElementById('vPhotoPreview').classList.add('hidden');
-                    document.getElementById('vPhotoPlaceholder').classList.remove('hidden');
-                }
-
-                modal.classList.remove('hidden');
-            }
-
-            closeVehicleModal() {
-                document.getElementById('vehicleModal').classList.add('hidden');
-            }
-
-            handlePhotoUpload(event) {
-                const file = event.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        this.currentPhotoBase64 = e.target.result;
-                        document.getElementById('vPhotoPreview').src = e.target.result;
-                        document.getElementById('vPhotoPreview').classList.remove('hidden');
-                        document.getElementById('vPhotoPlaceholder').classList.add('hidden');
-                    };
-                    reader.readAsDataURL(file);
-                }
-            }
-
-            saveVehicle(e) {
-                e.preventDefault();
-                const id = document.getElementById('vehicleId').value || 'v_' + Date.now();
-
-                const vehicleData = {
-                    id: id,
-                    plate: document.getElementById('vPlate').value.toUpperCase(),
-                    owner: document.getElementById('vOwner').value,
-                    model: document.getElementById('vModel').value,
-                    mileage: document.getElementById('vMileage').value,
-                    oilChange: document.getElementById('vOilChange').value,
-                    filters: document.getElementById('vFilters').value,
-                    nextService: document.getElementById('vNextService').value,
-                    date: document.getElementById('vDate').value,
-                    notes: document.getElementById('vNotes').value,
-                    photo: this.currentPhotoBase64 || 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=600&q=80'
-                };
-
-                const index = this.vehicles.findIndex(v => v.id === id);
-                if (index >= 0) {
-                    this.vehicles[index] = vehicleData;
-                } else {
-                    this.vehicles.unshift(vehicleData);
-                }
-
-                this.saveToStorage();
-                this.closeVehicleModal();
-                this.handleRouting();
-            }
-
-            deleteVehicle(id) {
-                if (confirm('¿Está seguro de que desea eliminar este registro de vehículo?')) {
-                    this.vehicles = this.vehicles.filter(v => v.id !== id);
-                    this.saveToStorage();
-                    this.handleRouting();
-                }
-            }
-
-            // QR GENERATION & SHARING
-            generateQR(id) {
-                const vehicle = this.vehicles.find(v => v.id === id);
-                if (!vehicle) return;
-
-                this.activeVehicleIdForQR = id;
-                document.getElementById('qrVehiclePlate').innerText = `PATENTE: ${vehicle.plate}`;
-
-                const baseUrl = window.location.protocol + '//' + window.location.host + window.location.pathname;
-                const qrUrl = `${baseUrl}?v=${vehicle.id}`;
-
-                const qrContainer = document.getElementById('qrcode');
-                qrContainer.innerHTML = '';
-
-                new QRCode(qrContainer, {
-                    text: qrUrl,
-                    width: 140,
-                    height: 140,
-                    colorDark: '#000000',
-                    colorLight: '#ffffff',
-                    correctLevel: QRCode.CorrectLevel.H
-                });
-
-                document.getElementById('qrModal').classList.remove('hidden');
-            }
-
-            closeQRModal() {
-                document.getElementById('qrModal').classList.add('hidden');
-            }
-
-            openVehicleInNewTab() {
-                if (this.activeVehicleIdForQR) {
-                    const baseUrl = window.location.protocol + '//' + window.location.host + window.location.pathname;
-                    const targetUrl = `${baseUrl}?v=${this.activeVehicleIdForQR}`;
-                    window.open(targetUrl, '_blank');
-                }
-            }
-
-            copyQRLink() {
-                if (this.activeVehicleIdForQR) {
-                    const baseUrl = window.location.protocol + '//' + window.location.host + window.location.pathname;
-                    const fullLink = `${baseUrl}?v=${this.activeVehicleIdForQR}`;
-
-                    const dummy = document.createElement('input');
-                    document.body.appendChild(dummy);
-                    dummy.value = fullLink;
-                    dummy.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(dummy);
-
-                    alert('¡Enlace directo copiado al portapapeles!');
-                }
-            }
+  </div>
+
+  <footer>
+    &copy; 2026 El Pobre José - Taller Mecánico | Sistema de Control Mantenimiento Vehicular
+  </footer>
+
+  <script>
+    // Estado de la aplicación
+    let isAdmin = localStorage.getItem('pobreJose_isAdmin') === 'true';
+    let currentQrUrl = '';
+
+    // Cargar vehículos desde localStorage
+    function getVehicles() {
+      const stored = localStorage.getItem('pobreJose_vehicles');
+      return stored ? JSON.parse(stored) : [];
+    }
+
+    // Guardar lista en localStorage
+    function saveVehiclesData(data) {
+      localStorage.setItem('pobreJose_vehicles', JSON.stringify(data));
+    }
+
+    // Inicio de la aplicación
+    document.addEventListener('DOMContentLoaded', () => {
+      renderHeaderControls();
+      checkRoute();
+    });
+
+    // Control de rutas por la URL
+    function checkRoute() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const vehicleParam = urlParams.get('v');
+      const dataParam = urlParams.get('data');
+
+      if (dataParam) {
+        // Modo URL con datos incrustados (Base64) para GitHub Pages
+        try {
+          const jsonString = decodeURIComponent(escape(atob(dataParam)));
+          const vehicleObj = JSON.parse(jsonString);
+          renderPublicVehicleView(vehicleObj);
+          return;
+        } catch (e) {
+          console.error("Error al decodificar datos del vehículo", e);
         }
+      }
 
-        let app;
-        window.onload = function() {
-            app = new MechanicalApp();
+      if (vehicleParam) {
+        // Modo consulta por ID
+        const vehicles = getVehicles();
+        const vehicle = vehicles.find(v => v.id === vehicleParam);
+        if (vehicle) {
+          renderPublicVehicleView(vehicle);
+        } else {
+          document.getElementById('mainContainer').innerHTML = `
+            <div style="text-align: center; padding: 3rem;">
+              <h2><i class="fas fa-exclamation-triangle" style="color: var(--primary-red);"></i> Vehículo No Encontrado</h2>
+              <p style="color: var(--text-muted); margin-top: 1rem;">No se encontraron registros asociados a este enlace.</p>
+            </div>
+          `;
+        }
+      } else {
+        // Ruta Principal
+        if (isAdmin) {
+          renderAdminDashboard();
+        } else {
+          renderLoginPrompt();
+        }
+      }
+    }
+
+    function renderHeaderControls() {
+      const container = document.getElementById('adminControls');
+      if (isAdmin) {
+        container.innerHTML = `
+          <button class="btn btn-primary" onclick="openAddVehicleModal()"><i class="fas fa-plus"></i> Nuevo Auto</button>
+          <button class="btn btn-danger" onclick="handleLogout()"><i class="fas fa-sign-out-alt"></i> Salir</button>
+        `;
+      } else {
+        container.innerHTML = `
+          <button class="btn" onclick="openModal('loginModal')"><i class="fas fa-user-shield"></i> Acceso Admin</button>
+        `;
+      }
+    }
+
+    // Renderiza la pantalla de bloqueo para usuarios no administradores
+    function renderLoginPrompt() {
+      const container = document.getElementById('mainContainer');
+      container.innerHTML = `
+        <div class="access-denied-container">
+          <div class="access-denied-icon">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <h2 class="access-title">SISTEMA PRIVADO DE TALLER</h2>
+          <p class="access-subtitle">La lista general está restringida. Inicia sesión como administrador o escanea el código QR de un vehículo específico.</p>
+          <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="openModal('loginModal')">
+            <i class="fas fa-key"></i> Iniciar Sesión Admin
+          </button>
+        </div>
+      `;
+    }
+
+    // Renderiza el catálogo completo para el Administrador
+    function renderAdminDashboard() {
+      const vehicles = getVehicles();
+      const container = document.getElementById('mainContainer');
+
+      let html = `
+        <div class="search-bar">
+          <input type="text" id="searchInput" class="form-control" placeholder="Buscar por modelo o patente..." onkeyup="filterVehicles()">
+        </div>
+        <div class="vehicles-grid" id="vehiclesGrid">
+      `;
+
+      if (vehicles.length === 0) {
+        html += `
+          <div style="grid-column: 1/-1; text-align: center; padding: 3rem; background: var(--card-bg); border-radius: 10px;">
+            <i class="fas fa-car" style="font-size: 3rem; color: var(--text-muted); margin-bottom: 1rem;"></i>
+            <h3>No hay vehículos registrados</h3>
+            <p style="color: var(--text-muted);">Presiona "Nuevo Auto" para agregar el primer registro.</p>
+          </div>
+        `;
+      } else {
+        vehicles.forEach(v => {
+          html += createVehicleCardHTML(v);
+        });
+      }
+
+      html += `</div>`;
+      container.innerHTML = html;
+    }
+
+    function createVehicleCardHTML(v) {
+      const defaultImg = 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&q=80&w=600';
+      return `
+        <div class="vehicle-card" data-search="${v.model.toLowerCase()} ${v.plate.toLowerCase()}">
+          <div class="vehicle-img-container">
+            <img src="${v.photo || defaultImg}" alt="${v.model}" class="vehicle-img">
+          </div>
+          <div class="vehicle-body">
+            <div class="vehicle-title">
+              <span>${v.model}</span>
+              <span class="plate-badge">${v.plate}</span>
+            </div>
+            <ul class="info-list">
+              <li class="info-item"><span class="info-label">Kilometraje:</span><span class="info-value">${Number(v.km).toLocaleString()} KM</span></li>
+              <li class="info-item"><span class="info-label">Aceite:</span><span class="info-value">${v.oil}</span></li>
+              <li class="info-item"><span class="info-label">Filtros:</span><span class="info-value">${v.filters || 'N/A'}</span></li>
+              <li class="info-item"><span class="info-label">Próx. Servicio:</span><span class="info-value" style="color: var(--primary-red);">${v.nextService}</span></li>
+            </ul>
+            ${v.notes ? `<p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;"><strong>Nota:</strong> ${v.notes}</p>` : ''}
+            
+            <div class="card-actions">
+              <button class="btn btn-primary" style="flex:1;" onclick="generateQR('${v.id}')"><i class="fas fa-qrcode"></i> QR</button>
+              <button class="btn" onclick="openEditVehicleModal('${v.id}')"><i class="fas fa-edit"></i></button>
+              <button class="btn btn-danger" onclick="deleteVehicle('${v.id}')"><i class="fas fa-trash"></i></button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Renderiza la vista pública exclusiva de un auto
+    function renderPublicVehicleView(v) {
+      const container = document.getElementById('mainContainer');
+      const defaultImg = 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&q=80&w=600';
+
+      container.innerHTML = `
+        <div class="public-view">
+          <div class="vehicle-img-container" style="height: 280px;">
+            <img src="${v.photo || defaultImg}" alt="${v.model}" class="vehicle-img">
+          </div>
+          <div class="vehicle-body" style="padding: 1.5rem;">
+            <div class="vehicle-title" style="font-size: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.8rem;">
+              <span>${v.model}</span>
+              <span class="plate-badge" style="font-size: 1rem;">${v.plate}</span>
+            </div>
+            
+            <ul class="info-list" style="margin: 1.5rem 0;">
+              <li class="info-item" style="padding: 0.7rem 0;"><span class="info-label"><i class="fas fa-tachometer-alt"></i> Kilometraje:</span><span class="info-value">${Number(v.km).toLocaleString()} KM</span></li>
+              <li class="info-item" style="padding: 0.7rem 0;"><span class="info-label"><i class="fas fa-oil-can"></i> Cambio de Aceite:</span><span class="info-value">${v.oil}</span></li>
+              <li class="info-item" style="padding: 0.7rem 0;"><span class="info-label"><i class="fas fa-filter"></i> Filtros:</span><span class="info-value">${v.filters || 'N/A'}</span></li>
+              <li class="info-item" style="padding: 0.7rem 0;"><span class="info-label"><i class="fas fa-calendar-check"></i> Próximo Servicio:</span><span class="info-value" style="color: var(--primary-red); font-weight: bold;">${v.nextService}</span></li>
+            </ul>
+
+            ${v.notes ? `
+              <div style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 8px; border-left: 3px solid var(--primary-red); margin-bottom: 1.5rem;">
+                <strong style="color: var(--silver); display: block; margin-bottom: 0.3rem;">Observaciones del Taller:</strong>
+                <p style="color: var(--text-muted); font-size: 0.95rem;">${v.notes}</p>
+              </div>
+            ` : ''}
+
+            <div style="text-align: center; margin-top: 1.5rem;">
+              ${isAdmin ? `
+                <button class="btn btn-primary" onclick="resetToHome()"><i class="fas fa-arrow-left"></i> Volver al Panel Admin</button>
+              ` : `
+                <p style="color: var(--text-muted); font-size: 0.8rem;"><i class="fas fa-check-circle" style="color: #00ff66;"></i> Ficha Mantenimiento Auténtica - El Pobre José</p>
+              `}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Modal Handlers
+    function openModal(id) { document.getElementById(id).classList.add('active'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+    // Login Handler
+    function handleLogin(e) {
+      e.preventDefault();
+      const user = document.getElementById('loginUser').value;
+      const pass = document.getElementById('loginPass').value;
+
+      if (user === 'admin' && pass === 'admin') {
+        isAdmin = true;
+        localStorage.setItem('pobreJose_isAdmin', 'true');
+        closeModal('loginModal');
+        renderHeaderControls();
+        renderAdminDashboard();
+      } else {
+        alert('Usuario o contraseña incorrectos.');
+      }
+    }
+
+    function handleLogout() {
+      isAdmin = false;
+      localStorage.removeItem('pobreJose_isAdmin');
+      renderHeaderControls();
+      renderLoginPrompt();
+    }
+
+    // Procesamiento de Imagen Base64
+    function previewImage(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById('vehFotoBase64').value = e.target.result;
         };
-    </script>
+        reader.readAsDataURL(file);
+      }
+    }
+
+    // Guardar / Editar Vehículo
+    function openAddVehicleModal() {
+      document.getElementById('vehId').value = '';
+      document.getElementById('vehicleModalTitle').innerText = 'Agregar Vehículo';
+      document.getElementById('vehModel').value = '';
+      document.getElementById('vehPlate').value = '';
+      document.getElementById('vehKm').value = '';
+      document.getElementById('vehOil').value = '';
+      document.getElementById('vehFilters').value = '';
+      document.getElementById('vehNextService').value = '';
+      document.getElementById('vehNotes').value = '';
+      document.getElementById('vehFotoBase64').value = '';
+      openModal('vehicleModal');
+    }
+
+    function openEditVehicleModal(id) {
+      const vehicles = getVehicles();
+      const v = vehicles.find(item => item.id === id);
+      if (!v) return;
+
+      document.getElementById('vehId').value = v.id;
+      document.getElementById('vehicleModalTitle').innerText = 'Editar Vehículo';
+      document.getElementById('vehModel').value = v.model;
+      document.getElementById('vehPlate').value = v.plate;
+      document.getElementById('vehKm').value = v.km;
+      document.getElementById('vehOil').value = v.oil;
+      document.getElementById('vehFilters').value = v.filters || '';
+      document.getElementById('vehNextService').value = v.nextService;
+      document.getElementById('vehNotes').value = v.notes || '';
+      document.getElementById('vehFotoBase64').value = v.photo || '';
+      openModal('vehicleModal');
+    }
+
+    function saveVehicle(e) {
+      e.preventDefault();
+      const id = document.getElementById('vehId').value || 'veh_' + Date.now();
+      const model = document.getElementById('vehModel').value;
+      const plate = document.getElementById('vehPlate').value.toUpperCase();
+      const km = document.getElementById('vehKm').value;
+      const oil = document.getElementById('vehOil').value;
+      const filters = document.getElementById('vehFilters').value;
+      const nextService = document.getElementById('vehNextService').value;
+      const notes = document.getElementById('vehNotes').value;
+      const photo = document.getElementById('vehFotoBase64').value;
+
+      const vehicleData = { id, model, plate, km, oil, filters, nextService, notes, photo };
+
+      let vehicles = getVehicles();
+      const existingIndex = vehicles.findIndex(v => v.id === id);
+
+      if (existingIndex >= 0) {
+        vehicles[existingIndex] = vehicleData;
+      } else {
+        vehicles.push(vehicleData);
+      }
+
+      saveVehiclesData(vehicles);
+      closeModal('vehicleModal');
+      renderAdminDashboard();
+    }
+
+    function deleteVehicle(id) {
+      if (confirm('¿Estás seguro de eliminar este vehículo?')) {
+        let vehicles = getVehicles();
+        vehicles = vehicles.filter(v => v.id !== id);
+        saveVehiclesData(vehicles);
+        renderAdminDashboard();
+      }
+    }
+
+    // Generador de QR
+    function generateQR(id) {
+      const vehicles = getVehicles();
+      const v = vehicles.find(item => item.id === id);
+      if (!v) return;
+
+      const qrContainer = document.getElementById('qrcode');
+      qrContainer.innerHTML = '';
+
+      // Crear copia del vehículo sin foto pesada para compactar el QR
+      const compactVehicle = { ...v, photo: '' };
+      const jsonString = JSON.stringify(compactVehicle);
+      const encodedData = btoa(unescape(encodeURIComponent(jsonString)));
+
+      const baseUrl = window.location.origin + window.location.pathname;
+      currentQrUrl = `${baseUrl}?data=${encodedData}`;
+
+      new QRCode(qrContainer, {
+        text: currentQrUrl,
+        width: 140,
+        height: 140,
+        colorDark : "#000000",
+        colorLight : "#ffffff",
+        correctLevel : QRCode.CorrectLevel.M
+      });
+
+      openModal('qrModal');
+    }
+
+    function openQrUrl() {
+      if (currentQrUrl) {
+        window.open(currentQrUrl, '_blank');
+      }
+    }
+
+    function copyQrUrl() {
+      if (currentQrUrl) {
+        navigator.clipboard.writeText(currentQrUrl);
+        alert('¡Enlace del vehículo copiado al portapapeles!');
+      }
+    }
+
+    // Filtro de búsqueda
+    function filterVehicles() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const cards = document.querySelectorAll('.vehicle-card');
+      cards.forEach(card => {
+        const text = card.getAttribute('data-search');
+        if (text.includes(query)) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    function resetToHome() {
+      window.history.pushState({}, '', window.location.pathname);
+      checkRoute();
+    }
+  </script>
 </body>
 </html>
