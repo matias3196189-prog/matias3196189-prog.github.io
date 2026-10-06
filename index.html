@@ -25,7 +25,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
-    <!-- Firebase (compat) -->
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
@@ -48,26 +47,21 @@
         .spinner { width:48px; height:48px; border:4px solid #2a3241; border-top-color:#ff1a3c;
             border-radius:50%; animation:spin 0.9s linear infinite; margin:0 auto; }
         @keyframes spin { to { transform: rotate(360deg); } }
+        .logo-img { object-fit: contain; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between antialiased selection:bg-cyber-red selection:text-white pb-10">
 
     <header class="sticky top-0 z-40 bg-cyber-black/90 backdrop-blur-md border-b border-cyber-red/30 shadow-lg">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <div class="flex items-center space-x-3 cursor-pointer" onclick="app.handleHomeClick()">
-                <div class="relative w-12 h-12 rounded-full border-2 border-cyber-red p-1 bg-cyber-dark shadow-neon-red flex items-center justify-center overflow-hidden">
-                    <svg viewBox="0 0 200 200" class="w-full h-full">
-                        <circle cx="100" cy="100" r="90" fill="#0d0d0d" stroke="#ff1a3c" stroke-width="6"/>
-                        <path d="M 40 120 A 70 70 0 1 1 160 120" fill="none" stroke="#e6e6e6" stroke-width="8" stroke-dasharray="8 4"/>
-                        <path d="M 130 60 L 100 100" stroke="#ff1a3c" stroke-width="6" stroke-linecap="round"/>
-                        <path d="M 60 140 L 140 60 M 140 140 L 60 60" stroke="#888" stroke-width="10" stroke-linecap="round"/>
-                        <rect x="88" y="70" width="24" height="35" rx="3" fill="#d0d0d0" stroke="#111" stroke-width="2"/>
-                        <circle cx="100" cy="85" r="5" fill="#111"/>
-                    </svg>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-24 flex items-center justify-between">
+            <div class="flex items-center space-x-4 cursor-pointer" onclick="app.handleHomeClick()">
+                <!-- LOGO GRANDE EN EL HEADER -->
+                <div class="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full border-2 border-cyber-red p-1 bg-cyber-dark shadow-neon-red flex items-center justify-center overflow-hidden shrink-0">
+                    <img src="logo.jpg" alt="Logo El Pobre José" class="w-full h-full logo-img rounded-full">
                 </div>
                 <div>
-                    <h1 class="font-tech text-lg sm:text-xl font-black tracking-wider chrome-text uppercase leading-none">EL POBRE JOSÉ</h1>
-                    <span class="text-xs font-semibold tracking-widest text-cyber-red uppercase glow-text-red block mt-0.5">
+                    <h1 class="font-tech text-xl sm:text-2xl font-black tracking-wider chrome-text uppercase leading-none">EL POBRE JOSÉ</h1>
+                    <span class="text-xs sm:text-sm font-semibold tracking-widest text-cyber-red uppercase glow-text-red block mt-1">
                         <i class="fa-solid fa-wrench mr-1"></i> Taller Mecánico
                     </span>
                 </div>
@@ -181,39 +175,40 @@
         </div>
     </div>
 
-    <!-- MODAL QR -->
-    <div id="qrModal" class="fixed inset-0 z-50 hidden modal-blur bg-black/85 flex items-center justify-center p-4">
-        <div class="bg-cyber-card border-2 border-cyber-red/80 rounded-2xl w-full max-w-xl p-6 sm:p-8 shadow-neon-red relative">
-            <button onclick="app.closeQRModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+    <!-- MODAL QR (LOGO GRANDE AL LADO DEL QR) -->
+    <div id="qrModal" class="fixed inset-0 z-50 hidden modal-blur bg-black/85 flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-cyber-card border-2 border-cyber-red/80 rounded-2xl w-full max-w-4xl p-6 sm:p-8 shadow-neon-red relative my-8">
+            <button onclick="app.closeQRModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white z-10">
                 <i class="fa-solid fa-xmark text-2xl"></i>
             </button>
-            <div class="text-center mb-4">
+            <div class="text-center mb-6">
                 <h3 class="font-tech text-lg sm:text-xl font-bold text-white uppercase tracking-wider">Código QR de Ficha Técnica</h3>
                 <p class="text-xs text-gray-400">Escanee para abrir la página pública dedicada de este vehículo</p>
             </div>
+
             <div class="bg-cyber-dark border border-cyber-border p-6 rounded-xl relative overflow-hidden mb-6">
-                <div class="flex flex-col sm:flex-row items-center justify-around gap-6">
-                    <div class="flex flex-col items-center text-center max-w-[200px]">
-                        <div class="w-20 h-20 rounded-full border-2 border-cyber-red p-1 bg-black shadow-neon-red mb-2 flex items-center justify-center">
-                            <svg viewBox="0 0 200 200" class="w-full h-full">
-                                <circle cx="100" cy="100" r="90" fill="#0d0d0d" stroke="#ff1a3c" stroke-width="6"/>
-                                <path d="M 40 120 A 70 70 0 1 1 160 120" fill="none" stroke="#e6e6e6" stroke-width="8" stroke-dasharray="8 4"/>
-                                <path d="M 130 60 L 100 100" stroke="#ff1a3c" stroke-width="6" stroke-linecap="round"/>
-                                <path d="M 60 140 L 140 60 M 140 140 L 60 60" stroke="#888" stroke-width="10" stroke-linecap="round"/>
-                                <rect x="88" y="70" width="24" height="35" rx="3" fill="#d0d0d0" stroke="#111" stroke-width="2"/>
-                            </svg>
+                <div class="flex flex-col sm:flex-row items-center justify-around gap-8">
+
+                    <!-- LOGO GRANDE -->
+                    <div class="flex flex-col items-center text-center max-w-[340px]">
+                        <div class="w-64 h-64 sm:w-72 sm:h-72 rounded-2xl border-2 border-cyber-red p-3 bg-black shadow-neon-red mb-4 flex items-center justify-center overflow-hidden">
+                            <img src="logo.jpg" alt="Logo El Pobre José" class="w-full h-full logo-img">
                         </div>
-                        <span class="font-tech text-sm font-black text-white uppercase tracking-wide">EL POBRE JOSÉ</span>
-                        <span class="text-[10px] font-bold text-cyber-red tracking-widest uppercase">Taller Mecánico</span>
-                        <span id="qrVehiclePlate" class="mt-3 px-3 py-1 bg-cyber-red/20 border border-cyber-red text-cyber-red font-tech font-bold text-xs rounded">---</span>
+                        <span class="font-tech text-xl font-black text-white uppercase tracking-wide">EL POBRE JOSÉ</span>
+                        <span class="text-sm font-bold text-cyber-red tracking-widest uppercase">Taller Mecánico</span>
+                        <span id="qrVehiclePlate" class="mt-4 px-4 py-1.5 bg-cyber-red/20 border border-cyber-red text-cyber-red font-tech font-bold text-sm rounded">---</span>
                     </div>
-                    <div class="hidden sm:block w-px h-32 bg-cyber-border"></div>
+
+                    <div class="hidden sm:block w-px h-56 bg-cyber-border"></div>
+
+                    <!-- QR -->
                     <div class="flex flex-col items-center">
-                        <div id="qrcode" class="p-3 bg-white rounded-lg shadow-lg border-2 border-cyber-red"></div>
+                        <div id="qrcode" class="p-4 bg-white rounded-lg shadow-lg border-2 border-cyber-red"></div>
                         <span class="text-[10px] text-gray-400 mt-2 font-mono">Página Única del Vehículo</span>
                     </div>
                 </div>
             </div>
+
             <div class="flex flex-wrap gap-3 justify-center">
                 <button onclick="app.openVehicleInNewTab()" class="px-4 py-2.5 bg-gradient-to-r from-cyber-red to-red-700 hover:from-red-600 hover:to-cyber-red text-white font-tech text-xs font-bold rounded shadow-neon-red flex items-center space-x-2">
                     <i class="fa-solid fa-up-right-from-square"></i>
@@ -223,12 +218,16 @@
                     <i class="fa-solid fa-link"></i>
                     <span>Copiar Enlace</span>
                 </button>
+                <button id="downloadQRBtn" onclick="app.downloadQRImage()" class="px-4 py-2.5 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600 text-white font-tech text-xs font-bold rounded shadow-lg flex items-center space-x-2 transition-all">
+                    <i class="fa-solid fa-download"></i>
+                    <span>Descargar JPG</span>
+                </button>
             </div>
         </div>
     </div>
 
     <!-- ============================================================
-         ⚙️ CONFIGURACIÓN DE FIREBASE — ¡EDITA SOLO ESTAS LÍNEAS!
+         ⚙️ CONFIGURACIÓN FIREBASE
          ============================================================ -->
     <script>
         window.FIREBASE_CONFIG = {
@@ -242,6 +241,13 @@
         };
 
         window.WORKSHOP_KEY = "el-pobre-jose-taller-2026-cambia-esto";
+
+        /* ============================================================
+           🖼️ RUTA DEL LOGO LOCAL
+           ➤ Guarda tu imagen como "logo.jpg" en la MISMA carpeta del HTML
+           ➤ Si usas otro nombre, cámbialo aquí abajo:
+           ============================================================ */
+        window.LOGO_URL = "logo.jpg";
     </script>
 
     <script>
@@ -255,8 +261,8 @@
                 this.ready = false;
                 this.dbRef = null;
                 this.storageKey = 'pobreJose_vehicles';
-                this.cloudMode = null;      // 👈 NUEVO: guarda el estado de la nube
-                this.cloudDetail = '';      // 👈 NUEVO: detalle del estado
+                this.cloudMode = null;
+                this.cloudDetail = '';
             }
 
             init() {
@@ -282,7 +288,6 @@
                 this.checkConfigWarning();
             }
 
-            /* ---------- FIREBASE ---------- */
             initCloud() {
                 const cfg = window.FIREBASE_CONFIG || {};
                 const notConfigured =
@@ -336,12 +341,10 @@
                 this.renderCloudStatus();
             }
 
-            // 👇 NUEVO: solo dibuja el badge si el modo admin está activo
             renderCloudStatus() {
                 const el = document.getElementById('cloudStatus');
                 if (!el) return;
 
-                // Fuera del modo admin: siempre oculto
                 if (!this.isAdmin || !this.cloudMode) {
                     el.classList.add('hidden');
                     return;
@@ -401,7 +404,7 @@
                     bar.classList.remove('flex');
                 }
 
-                this.renderCloudStatus(); // 👈 NUEVO: muestra/oculta el badge según el modo
+                this.renderCloudStatus();
             }
 
             render() {
@@ -818,7 +821,7 @@
                 const c = document.getElementById('qrcode');
                 c.innerHTML = '';
                 new QRCode(c, {
-                    text: url, width: 140, height: 140,
+                    text: url, width: 160, height: 160,
                     colorDark: '#000000', colorLight: '#ffffff',
                     correctLevel: QRCode.CorrectLevel.H
                 });
@@ -842,6 +845,254 @@
                 document.body.appendChild(d); d.value = link; d.select();
                 document.execCommand('copy'); document.body.removeChild(d);
                 alert('¡Enlace copiado!\n\n' + link);
+            }
+
+            /* ================= DESCARGA DEL QR EN JPG ================= */
+
+            loadImage(src) {
+                return new Promise((resolve) => {
+                    if (!src) return resolve(null);
+                    const img = new Image();
+                    img.crossOrigin = 'anonymous';
+                    img.onload = () => resolve(img);
+                    img.onerror = () => resolve(null);
+                    img.src = src;
+                });
+            }
+
+            async getLogoImage() {
+                const img = await this.loadImage(window.LOGO_URL);
+                return img;
+            }
+
+            rrect(ctx, x, y, w, h, r) {
+                ctx.beginPath();
+                ctx.moveTo(x + r, y);
+                ctx.arcTo(x + w, y, x + w, y + h, r);
+                ctx.arcTo(x + w, y + h, x, y + h, r);
+                ctx.arcTo(x, y + h, x, y, r);
+                ctx.arcTo(x, y, x + w, y, r);
+                ctx.closePath();
+            }
+
+            fitText(ctx, text, maxW) {
+                let t = String(text === undefined || text === null || text === '' ? '—' : text);
+                if (ctx.measureText(t).width <= maxW) return t;
+                while (t.length > 1 && ctx.measureText(t + '…').width > maxW) t = t.slice(0, -1);
+                return t + '…';
+            }
+
+            buildQRCanvas(text, size) {
+                return new Promise((resolve, reject) => {
+                    const holder = document.createElement('div');
+                    holder.style.cssText = 'position:fixed;left:-99999px;top:0;';
+                    document.body.appendChild(holder);
+
+                    new QRCode(holder, {
+                        text, width: size, height: size,
+                        colorDark: '#000000', colorLight: '#ffffff',
+                        correctLevel: QRCode.CorrectLevel.H
+                    });
+
+                    setTimeout(() => {
+                        const cv  = holder.querySelector('canvas');
+                        const im  = holder.querySelector('img');
+                        if (cv) {
+                            const out = document.createElement('canvas');
+                            out.width = size; out.height = size;
+                            const cx = out.getContext('2d');
+                            cx.fillStyle = '#ffffff';
+                            cx.fillRect(0, 0, size, size);
+                            cx.drawImage(cv, 0, 0, size, size);
+                            holder.remove();
+                            resolve(out);
+                        } else if (im) {
+                            if (im.complete && im.naturalWidth) { holder.remove(); resolve(im); }
+                            else {
+                                im.onload  = () => { holder.remove(); resolve(im); };
+                                im.onerror = () => { holder.remove(); reject(new Error('No se pudo generar el QR')); };
+                            }
+                        } else {
+                            holder.remove();
+                            reject(new Error('No se pudo generar el QR'));
+                        }
+                    }, 160);
+                });
+            }
+
+            async downloadQRImage() {
+                const v = this.vehicles.find(x => x.id === this.activeVehicleIdForQR);
+                if (!v) { alert('No hay vehículo seleccionado.'); return; }
+
+                const btn  = document.getElementById('downloadQRBtn');
+                const orig = btn.innerHTML;
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i> Generando...';
+
+                try {
+                    const qrImg  = await this.buildQRCanvas(this.getVehicleUrl(v.id), 640);
+                    const logo   = await this.getLogoImage();
+                    const dataUrl = await this.composeQRCard(v, qrImg, logo);
+
+                    const a = document.createElement('a');
+                    a.href = dataUrl;
+                    a.download = 'ElPobreJose_' + String(v.plate || 'vehiculo').replace(/[^a-z0-9]/gi, '') + '_QR.jpg';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                } catch (err) {
+                    console.error(err);
+                    alert('❌ No se pudo generar el JPG.\n' + err.message + '\n\nSi abres el HTML con doble clic (file://), sube los archivos a un servidor o usa Live Server.');
+                } finally {
+                    btn.disabled = false;
+                    btn.innerHTML = orig;
+                }
+            }
+
+            async composeQRCard(v, qrSource, logo) {
+                const W = 900, H = 1520;
+                const cv = document.createElement('canvas');
+                cv.width = W; cv.height = H;
+                const ctx = cv.getContext('2d');
+
+                const bg = ctx.createLinearGradient(0, 0, 0, H);
+                bg.addColorStop(0, '#0c0f15');
+                bg.addColorStop(0.55, '#07080a');
+                bg.addColorStop(1, '#0e1117');
+                ctx.fillStyle = bg;
+                ctx.fillRect(0, 0, W, H);
+
+                const glow = ctx.createRadialGradient(W / 2, -60, 0, W / 2, -60, 720);
+                glow.addColorStop(0, 'rgba(255,26,60,0.40)');
+                glow.addColorStop(1, 'rgba(255,26,60,0)');
+                ctx.fillStyle = glow;
+                ctx.fillRect(0, 0, W, 640);
+
+                ctx.strokeStyle = '#ff1a3c';
+                ctx.lineWidth = 6;
+                this.rrect(ctx, 22, 22, W - 44, H - 44, 24);
+                ctx.stroke();
+
+                ctx.strokeStyle = 'rgba(192,192,192,0.30)';
+                ctx.lineWidth = 1.5;
+                this.rrect(ctx, 40, 40, W - 80, H - 80, 16);
+                ctx.stroke();
+
+                /* LOGO GRANDE EN LA DESCARGA JPG */
+                const logoTop = 62, logoBoxH = 360;
+                if (logo) {
+                    const s  = Math.min(620 / logo.width, logoBoxH / logo.height);
+                    const lw = logo.width * s, lh = logo.height * s;
+                    ctx.drawImage(logo, (W - lw) / 2, logoTop + (logoBoxH - lh) / 2, lw, lh);
+                } else {
+                    ctx.textAlign = 'center';
+                    ctx.fillStyle = '#ffffff';
+                    ctx.font = '900 48px Orbitron, Inter, sans-serif';
+                    ctx.fillText('EL POBRE JOSÉ', W / 2, logoTop + 150);
+                    ctx.fillStyle = '#ff1a3c';
+                    ctx.font = '700 24px Inter, sans-serif';
+                    ctx.fillText('TALLER MECÁNICO', W / 2, logoTop + 196);
+                }
+                let y = logoTop + logoBoxH;
+
+                y += 26;
+                const dg = ctx.createLinearGradient(90, 0, W - 90, 0);
+                dg.addColorStop(0, 'rgba(255,26,60,0)');
+                dg.addColorStop(0.5, '#ff1a3c');
+                dg.addColorStop(1, 'rgba(255,26,60,0)');
+                ctx.strokeStyle = dg;
+                ctx.lineWidth = 2;
+                ctx.beginPath(); ctx.moveTo(90, y); ctx.lineTo(W - 90, y); ctx.stroke();
+
+                y += 50;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'alphabetic';
+                ctx.fillStyle = '#ffffff';
+                ctx.font = '700 28px Orbitron, Inter, sans-serif';
+                ctx.fillText('FICHA TÉCNICA VEHICULAR', W / 2, y);
+
+                const plate = String(v.plate || 'SIN PLACA').toUpperCase();
+                ctx.font = '900 40px Orbitron, Inter, sans-serif';
+                const pw = Math.min(ctx.measureText(plate).width + 80, W - 200);
+                const ph = 68, px = (W - pw) / 2, py = y + 18;
+
+                ctx.fillStyle = 'rgba(255,26,60,0.14)';
+                this.rrect(ctx, px, py, pw, ph, 12); ctx.fill();
+                ctx.strokeStyle = '#ff1a3c'; ctx.lineWidth = 2.5; ctx.stroke();
+
+                ctx.fillStyle = '#ff1a3c';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(plate, W / 2, py + ph / 2 + 1);
+                ctx.textBaseline = 'alphabetic';
+
+                y = py + ph + 54;
+                ctx.fillStyle = '#ffffff';
+                ctx.font = '700 32px Inter, sans-serif';
+                ctx.fillText(this.fitText(ctx, v.model, W - 160), W / 2, y);
+
+                y += 36;
+                ctx.fillStyle = '#c0c0c0';
+                ctx.font = '500 22px Inter, sans-serif';
+                ctx.fillText(this.fitText(ctx, 'Propietario: ' + (v.owner || 'N/A'), W - 160), W / 2, y);
+
+                const panelX = 90, panelW = W - 180;
+                const panelY = y + 30, panelH = 330;
+
+                ctx.fillStyle = 'rgba(22,27,34,0.92)';
+                this.rrect(ctx, panelX, panelY, panelW, panelH, 16); ctx.fill();
+                ctx.strokeStyle = 'rgba(42,50,65,1)'; ctx.lineWidth = 1.5; ctx.stroke();
+
+                const rows = [
+                    ['Kilometraje',       Number(v.mileage || 0).toLocaleString() + ' KM', false],
+                    ['Cambio de aceite',  v.oilChange   || 'Sin registro', false],
+                    ['Filtros',           v.filters     || 'Sin registro', false],
+                    ['Próximo servicio',  v.nextService || 'No programado', true],
+                    ['Fecha de atención', v.date        || 'N/A', false]
+                ];
+                let ry = panelY + 58;
+                rows.forEach((r, i) => {
+                    ctx.textAlign = 'left';
+                    ctx.font = '600 20px Inter, sans-serif';
+                    ctx.fillStyle = '#8b95a5';
+                    ctx.fillText(r[0].toUpperCase(), panelX + 32, ry);
+
+                    ctx.textAlign = 'right';
+                    ctx.font = '700 22px Inter, sans-serif';
+                    ctx.fillStyle = r[2] ? '#ff1a3c' : '#ffffff';
+                    ctx.fillText(this.fitText(ctx, r[1], panelW - 400), panelX + panelW - 32, ry);
+
+                    if (i < rows.length - 1) {
+                        ctx.strokeStyle = 'rgba(42,50,65,0.7)';
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(panelX + 32, ry + 18);
+                        ctx.lineTo(panelX + panelW - 32, ry + 18);
+                        ctx.stroke();
+                    }
+                    ry += 54;
+                });
+
+                const qrSize = 300, pad = 20, boxSize = qrSize + pad * 2;
+                const boxX = (W - boxSize) / 2;
+                const boxY = panelY + panelH + 34;
+
+                ctx.fillStyle = '#ffffff';
+                this.rrect(ctx, boxX, boxY, boxSize, boxSize, 18); ctx.fill();
+                ctx.strokeStyle = '#ff1a3c'; ctx.lineWidth = 4; ctx.stroke();
+                ctx.drawImage(qrSource, boxX + pad, boxY + pad, qrSize, qrSize);
+
+                let fy = boxY + boxSize + 44;
+                ctx.textAlign = 'center';
+                ctx.fillStyle = '#9aa4b2';
+                ctx.font = '500 18px Inter, sans-serif';
+                ctx.fillText('Escanee este código para ver la ficha pública del vehículo', W / 2, fy);
+
+                fy += 34;
+                ctx.fillStyle = '#ff1a3c';
+                ctx.font = '700 18px Orbitron, Inter, sans-serif';
+                ctx.fillText('EL POBRE JOSÉ · TALLER MECÁNICO', W / 2, fy);
+
+                return cv.toDataURL('image/jpeg', 0.93);
             }
 
             esc(s) {
