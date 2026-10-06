@@ -9,22 +9,15 @@
     <script>
         tailwind.config = {
             darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        cyber: {
-                            black: '#07080a', dark: '#0e1117', card: '#161b22',
-                            border: '#2a3241', red: '#ff1a3c', redGlow: '#ff002b',
-                            silver: '#c0c0c0', silverLight: '#e6e6e6'
-                        }
-                    },
-                    fontFamily: { sans: ['Inter', 'sans-serif'], tech: ['Orbitron', 'sans-serif'] },
-                    boxShadow: {
-                        'neon-red': '0 0 15px rgba(255, 26, 60, 0.6), 0 0 30px rgba(255, 26, 60, 0.2)',
-                        'neon-red-lg': '0 0 25px rgba(255, 26, 60, 0.8), 0 0 50px rgba(255, 26, 60, 0.4)'
-                    }
+            theme: { extend: {
+                colors: { cyber: { black:'#07080a', dark:'#0e1117', card:'#161b22', border:'#2a3241',
+                    red:'#ff1a3c', redGlow:'#ff002b', silver:'#c0c0c0', silverLight:'#e6e6e6' } },
+                fontFamily: { sans: ['Inter','sans-serif'], tech: ['Orbitron','sans-serif'] },
+                boxShadow: {
+                    'neon-red': '0 0 15px rgba(255,26,60,0.6), 0 0 30px rgba(255,26,60,0.2)',
+                    'neon-red-lg': '0 0 25px rgba(255,26,60,0.8), 0 0 50px rgba(255,26,60,0.4)'
                 }
-            }
+            }}
         }
     </script>
 
@@ -32,31 +25,28 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
+    <!-- Firebase (compat) -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
     <style>
-        body {
-            background-color: #07080a; color: #e6e6e6; font-family: 'Inter', sans-serif;
+        body { background-color:#07080a; color:#e6e6e6; font-family:'Inter',sans-serif;
             background-image:
-                radial-gradient(circle at 50% 0%, rgba(255, 26, 60, 0.15) 0%, transparent 70%),
-                linear-gradient(to bottom, rgba(7, 8, 10, 0.95), rgba(14, 17, 23, 0.98));
-            background-attachment: fixed;
-        }
-        .font-tech { font-family: 'Orbitron', sans-serif; }
-        .chrome-text {
-            background: linear-gradient(180deg, #ffffff 0%, #c0c0c0 45%, #707070 50%, #e6e6e6 85%, #ffffff 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8));
-        }
-        .glow-text-red { text-shadow: 0 0 10px #ff1a3c, 0 0 20px #ff1a3c; }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #07080a; }
-        ::-webkit-scrollbar-thumb { background: #2a3241; border-radius: 4px; border: 1px solid #ff1a3c; }
-        ::-webkit-scrollbar-thumb:hover { background: #ff1a3c; }
+                radial-gradient(circle at 50% 0%, rgba(255,26,60,0.15) 0%, transparent 70%),
+                linear-gradient(to bottom, rgba(7,8,10,0.95), rgba(14,17,23,0.98));
+            background-attachment:fixed; }
+        .font-tech { font-family:'Orbitron',sans-serif; }
+        .chrome-text { background:linear-gradient(180deg,#fff 0%,#c0c0c0 45%,#707070 50%,#e6e6e6 85%,#fff 100%);
+            -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+            filter:drop-shadow(0 2px 4px rgba(0,0,0,0.8)); }
+        .glow-text-red { text-shadow:0 0 10px #ff1a3c, 0 0 20px #ff1a3c; }
+        ::-webkit-scrollbar { width:8px; }
+        ::-webkit-scrollbar-track { background:#07080a; }
+        ::-webkit-scrollbar-thumb { background:#2a3241; border-radius:4px; border:1px solid #ff1a3c; }
+        ::-webkit-scrollbar-thumb:hover { background:#ff1a3c; }
         .modal-blur { backdrop-filter: blur(8px); }
-        .spinner {
-            width: 48px; height: 48px; border: 4px solid #2a3241;
-            border-top-color: #ff1a3c; border-radius: 50%;
-            animation: spin 0.9s linear infinite; margin: 0 auto;
-        }
+        .spinner { width:48px; height:48px; border:4px solid #2a3241; border-top-color:#ff1a3c;
+            border-radius:50%; animation:spin 0.9s linear infinite; margin:0 auto; }
         @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
@@ -82,7 +72,6 @@
                     </span>
                 </div>
             </div>
-
             <div class="flex items-center space-x-3">
                 <span id="cloudStatus" class="hidden text-[10px] font-tech font-bold px-3 py-1 rounded-full border"></span>
                 <span id="adminBadge" class="hidden text-xs font-tech font-bold px-3 py-1 rounded-full bg-cyber-red/20 text-cyber-red border border-cyber-red animate-pulse">
@@ -156,7 +145,7 @@
                             <button type="button" onclick="document.getElementById('vPhotoInput').click()" class="px-4 py-2 bg-cyber-dark border border-cyber-border hover:border-cyber-red rounded text-xs font-tech text-white transition-all">
                                 <i class="fa-solid fa-upload mr-1"></i> Seleccionar Imagen
                             </button>
-                            <p class="text-[10px] text-gray-500 mt-1">Se comprime a ~900px antes de subir (recomendado &lt; 300 KB).</p>
+                            <p class="text-[10px] text-gray-500 mt-1">Se comprime automáticamente antes de subir a la nube.</p>
                         </div>
                     </div>
                 </div>
@@ -182,7 +171,7 @@
                 </div>
                 <div>
                     <label class="block text-xs font-tech text-gray-300 mb-1">NOTAS OPCIONALES / OBSERVACIONES</label>
-                    <textarea id="vNotes" rows="2" placeholder="Detalles de frenos, suspensión, fugas u otras revisiones..." class="w-full px-3 py-2 bg-cyber-dark border border-cyber-border rounded text-sm text-white focus:border-cyber-red focus:outline-none"></textarea>
+                    <textarea id="vNotes" rows="2" placeholder="Detalles de frenos, suspensión, fugas..." class="w-full px-3 py-2 bg-cyber-dark border border-cyber-border rounded text-sm text-white focus:border-cyber-red focus:outline-none"></textarea>
                 </div>
                 <div class="flex justify-end space-x-3 pt-4 border-t border-cyber-border">
                     <button type="button" onclick="app.closeVehicleModal()" class="px-5 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 font-tech text-xs uppercase rounded">Cancelar</button>
@@ -239,20 +228,24 @@
     </div>
 
     <!-- ============================================================
-         ⚙️ CONFIGURACIÓN DE GITHUB — ¡EDITA SOLO ESTAS 4 LÍNEAS!
+         ⚙️ CONFIGURACIÓN DE FIREBASE — ¡EDITA SOLO ESTAS LÍNEAS!
+         Los valores NO son secretos: Firebase los expone públicamente
+         por diseño. La seguridad se controla desde las REGLAS del servidor.
          ============================================================ -->
     <script>
-        window.GITHUB_CONFIG = {
-            owner:  "matias3196189-prog",                 // 👈 tu usuario de GitHub
-            repo:   "matias3196189-prog.github.io",       // 👈 tu repositorio
-            branch: "main",                                // 👈 "main" o "master"
-            path:   "data.json",                           // 👈 archivo donde se guardan los autos
-            token:  "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"   // 👈 tu token fine-grained
+        window.FIREBASE_CONFIG = {
+            apiKey:            "AIzaSyCPoQMqnkkZAa3jvTxBxaUOAOR8O68BmaQ",
+            authDomain:        "el-pobre-jose.firebaseapp.com",
+            databaseURL:       "https://el-pobre-jose-default-rtdb.firebaseio.com",
+            projectId:         "el-pobre-jose",
+            storageBucket:     "el-pobre-jose.firebasestorage.app",
+            messagingSenderId: "214347478173",
+            appId:             "1:214347478173:web:520e22b87b56635f799074"
         };
 
-        // 🔁 Sincronización automática: cada 20 segundos revisa si hay cambios
-        //    en GitHub (por si otro dispositivo guardó algo). Ponlo en 0 para desactivar.
-        window.SYNC_INTERVAL_MS = 20000;
+        // 👉 Clave privada de taller: cambia esto por una frase única tuya.
+        //    Sirve para que tu carpeta dentro de la base de datos no sea adivinable.
+        window.WORKSHOP_KEY = "el-pobre-jose-taller-2026-cambia-esto";
     </script>
 
     <script>
@@ -264,10 +257,8 @@
                 this.activeVehicleIdForQR = null;
                 this.cloudEnabled = false;
                 this.ready = false;
-                this.currentSha = null;    // SHA del archivo (necesario para actualizar en GitHub)
-                this.syncTimer = null;
+                this.dbRef = null;
                 this.storageKey = 'pobreJose_vehicles';
-                this.lastJsonHash = '';    // para no repintar si no hubo cambios
             }
 
             init() {
@@ -281,9 +272,8 @@
                     try { this.vehicles = JSON.parse(cached) || []; } catch (e) { this.vehicles = []; }
                 }
 
-                const cloudStarted = this.initCloud();
-
-                if (!cloudStarted) {
+                const started = this.initCloud();
+                if (!started) {
                     this.ready = true;
                     if (this.vehicles.length === 0) this.seedDemoVehicle();
                     this.setStatus('local');
@@ -294,194 +284,66 @@
                 this.checkConfigWarning();
             }
 
-            /* ============ GITHUB STORAGE ============ */
-            isGithubConfigured() {
-                const c = window.GITHUB_CONFIG || {};
-                return c.owner && c.repo && c.token && c.token.indexOf('PEGA_AQUI') === -1 && c.token.startsWith('github_pat_');
-            }
-
+            /* ---------- FIREBASE ---------- */
             initCloud() {
-                if (!this.isGithubConfigured()) {
-                    console.warn('[Modo local] GitHub no está configurado.');
+                const cfg = window.FIREBASE_CONFIG || {};
+                const notConfigured =
+                    !cfg.databaseURL ||
+                    cfg.databaseURL.indexOf('👉') !== -1 ||
+                    (cfg.apiKey || '').indexOf('👉') !== -1 ||
+                    typeof firebase === 'undefined';
+
+                if (notConfigured) {
+                    console.warn('[Modo local] Firebase no está configurado.');
                     return false;
                 }
 
-                this.cloudEnabled = true;
-                this.setStatus('connecting');
-                this.ready = false;
+                try {
+                    if (!firebase.apps.length) firebase.initializeApp(cfg);
+                    this.cloudEnabled = true;
+                    this.setStatus('connecting');
 
-                this.loadFromGitHub().then(() => {
-                    this.ready = true;
-                    this.setStatus('cloud');
-                    this.render();
-                    this.startAutoSync();
-                }).catch(err => {
-                    console.error('GitHub error:', err);
-                    this.ready = true;
-                    this.setStatus('error', err.message);
-                    this.render();
-                });
+                    this.dbRef = firebase.database().ref('talleres/' + window.WORKSHOP_KEY + '/vehiculos');
 
-                return true;
-            }
-
-            // Lee data.json desde el repo
-            async loadFromGitHub(silent = false) {
-                const c = window.GITHUB_CONFIG;
-                const url = `https://api.github.com/repos/${c.owner}/${c.repo}/contents/${c.path}?ref=${c.branch}&t=${Date.now()}`;
-
-                const res = await fetch(url, {
-                    headers: {
-                        'Authorization': `Bearer ${c.token}`,
-                        'Accept': 'application/vnd.github.v3+json'
-                    }
-                });
-
-                if (res.status === 404) {
-                    // El archivo aún no existe -> lo creamos vacío
-                    this.vehicles = [];
-                    this.currentSha = null;
-                    if (!silent) {
-                        try { await this.writeToGitHub([]); } catch (e) { console.warn(e); }
-                    }
-                    return;
-                }
-
-                if (!res.ok) {
-                    const err = await res.json().catch(() => ({}));
-                    throw new Error(`GitHub ${res.status}: ${err.message || 'error leyendo data.json'}`);
-                }
-
-                const json = await res.json();
-                this.currentSha = json.sha;
-
-                const decoded = this.b64DecodeUnicode(json.content.replace(/\n/g, ''));
-                let list = [];
-                try { list = JSON.parse(decoded) || []; } catch (e) { list = []; }
-
-                // Detectar si cambió respecto a lo que ya teníamos (para no repintar en cada poll)
-                const hash = JSON.stringify(list);
-                const changed = hash !== this.lastJsonHash;
-
-                if (changed) {
-                    this.vehicles = list;
-                    this.lastJsonHash = hash;
-                    localStorage.setItem(this.storageKey, JSON.stringify(list));
-                    if (silent) this.render(); // refrescar UI sin spinners
-                }
-
-                return changed;
-            }
-
-            // Escribe data.json en el repo (crea commit)
-            async writeToGitHub(list) {
-                const c = window.GITHUB_CONFIG;
-                const url = `https://api.github.com/repos/${c.owner}/${c.repo}/contents/${c.path}`;
-
-                const content = this.b64EncodeUnicode(JSON.stringify(list, null, 2));
-
-                // Si no tenemos SHA, lo pedimos antes (necesario para UPDATE)
-                if (!this.currentSha) {
-                    try {
-                        const head = await fetch(url + `?ref=${c.branch}&t=${Date.now()}`, {
-                            headers: { 'Authorization': `Bearer ${c.token}`, 'Accept': 'application/vnd.github.v3+json' }
+                    // Escucha en tiempo real: cualquier cambio se refleja al instante
+                    // en TODOS los dispositivos abiertos.
+                    this.dbRef.on('value', (snap) => {
+                        const raw = snap.val() || {};
+                        const list = Object.keys(raw).map(k => {
+                            const v = raw[k]; v.id = v.id || k; return v;
                         });
-                        if (head.ok) {
-                            const hj = await head.json();
-                            this.currentSha = hj.sha;
-                        }
-                    } catch (e) { /* archivo nuevo, no pasa nada */ }
-                }
+                        list.sort((a,b) => (b.updatedAt||b.createdAt||0) - (a.updatedAt||a.createdAt||0));
 
-                const body = {
-                    message: `Actualizar vehículos (${new Date().toLocaleString('es-CL')})`,
-                    content,
-                    branch: c.branch
-                };
-                if (this.currentSha) body.sha = this.currentSha;
-
-                const res = await fetch(url, {
-                    method: 'PUT',
-                    headers: {
-                        'Authorization': `Bearer ${c.token}`,
-                        'Accept': 'application/vnd.github.v3+json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(body)
-                });
-
-                if (res.status === 409) {
-                    // Conflicto: alguien guardó al mismo tiempo. Reintentamos 1 vez.
-                    const head = await fetch(url + `?ref=${c.branch}&t=${Date.now()}`, {
-                        headers: { 'Authorization': `Bearer ${c.token}`, 'Accept': 'application/vnd.github.v3+json' }
+                        this.vehicles = list;
+                        localStorage.setItem(this.storageKey, JSON.stringify(list));
+                        this.ready = true;
+                        this.setStatus('cloud');
+                        this.render();
+                    }, (err) => {
+                        console.error('Firebase error:', err);
+                        this.ready = true;
+                        this.setStatus('error', err.message);
+                        this.render();
                     });
-                    const hj = await head.json();
-                    this.currentSha = hj.sha;
-                    body.sha = this.currentSha;
 
-                    const retry = await fetch(url, {
-                        method: 'PUT',
-                        headers: {
-                            'Authorization': `Bearer ${c.token}`,
-                            'Accept': 'application/vnd.github.v3+json',
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(body)
-                    });
-                    if (!retry.ok) {
-                        const err = await retry.json().catch(() => ({}));
-                        throw new Error(err.message || 'Conflicto al guardar');
-                    }
-                    const out = await retry.json();
-                    this.currentSha = out.content.sha;
-                    return out;
+                    return true;
+                } catch (e) {
+                    console.error(e);
+                    this.cloudEnabled = false;
+                    return false;
                 }
-
-                if (!res.ok) {
-                    const err = await res.json().catch(() => ({}));
-                    throw new Error(`GitHub ${res.status}: ${err.message || 'error guardando'}`);
-                }
-
-                const json = await res.json();
-                this.currentSha = json.content.sha;
-                this.lastJsonHash = JSON.stringify(list);
-                return json;
-            }
-
-            startAutoSync() {
-                if (this.syncTimer) clearInterval(this.syncTimer);
-                if (!window.SYNC_INTERVAL_MS) return;
-
-                this.syncTimer = setInterval(async () => {
-                    // Solo hacemos polling si no estamos guardando
-                    if (document.getElementById('saveVehicleBtn')?.disabled) return;
-                    try {
-                        await this.loadFromGitHub(true);
-                    } catch (e) {
-                        console.warn('Sync error:', e.message);
-                    }
-                }, window.SYNC_INTERVAL_MS);
-            }
-
-            // Helpers Base64 con soporte UTF-8 (tildes, ñ, etc.)
-            b64EncodeUnicode(str) {
-                return btoa(unescape(encodeURIComponent(str)));
-            }
-            b64DecodeUnicode(str) {
-                return decodeURIComponent(escape(atob(str)));
             }
 
             setStatus(mode, detail) {
                 const el = document.getElementById('cloudStatus');
                 if (!el) return;
                 el.classList.remove('hidden');
-                const styles = {
-                    connecting: ['text-yellow-400', 'border-yellow-500/60', 'bg-yellow-500/10', 'fa-solid fa-cloud-arrow-up', 'CONECTANDO...'],
-                    cloud:      ['text-green-400',  'border-green-500/60',  'bg-green-500/10',  'fa-brands fa-github',         'GITHUB OK'],
-                    local:      ['text-gray-400',   'border-gray-500/60',   'bg-gray-500/10',   'fa-solid fa-hard-drive',      'MODO LOCAL'],
-                    error:      ['text-cyber-red',  'border-cyber-red',     'bg-cyber-red/10',  'fa-solid fa-triangle-exclamation', 'ERROR GITHUB']
-                };
-                const s = styles[mode] || styles.local;
+                const s = {
+                    connecting: ['text-yellow-400','border-yellow-500/60','bg-yellow-500/10','fa-solid fa-cloud-arrow-up','CONECTANDO...'],
+                    cloud:      ['text-green-400','border-green-500/60','bg-green-500/10','fa-solid fa-cloud','NUBE ACTIVA'],
+                    local:      ['text-gray-400','border-gray-500/60','bg-gray-500/10','fa-solid fa-hard-drive','MODO LOCAL'],
+                    error:      ['text-cyber-red','border-cyber-red','bg-cyber-red/10','fa-solid fa-triangle-exclamation','ERROR NUBE']
+                }[mode] || ['text-gray-400','border-gray-500/60','bg-gray-500/10','fa-solid fa-hard-drive','LOCAL'];
                 el.className = `text-[10px] font-tech font-bold px-3 py-1 rounded-full border ${s[0]} ${s[1]} ${s[2]}`;
                 el.innerHTML = `<i class="${s[3]} mr-1"></i> ${s[4]}`;
                 el.title = detail || '';
@@ -494,10 +356,7 @@
                 warn.className = 'max-w-7xl mx-auto mb-4 text-[11px] font-tech text-yellow-300 bg-yellow-500/10 border border-yellow-500/40 rounded-lg px-4 py-3 flex items-start gap-2';
                 warn.innerHTML = `
                     <i class="fa-solid fa-triangle-exclamation mt-0.5"></i>
-                    <div>
-                        <strong>Modo local activo.</strong> Los datos solo se guardan en ESTE navegador.<br>
-                        Para que se vean en todos los dispositivos, configura <code class="text-yellow-200">GITHUB_CONFIG</code> (owner, repo, token) al inicio del HTML.
-                    </div>`;
+                    <div><strong>Modo local.</strong> Configura <code class="text-yellow-200">FIREBASE_CONFIG</code> al final del HTML para sincronizar entre dispositivos.</div>`;
                 main.insertBefore(warn, main.firstChild);
             }
 
@@ -515,24 +374,13 @@
                 localStorage.setItem(this.storageKey, JSON.stringify(this.vehicles));
             }
 
-            updateAdminUI(isLoggedIn) {
-                const adminBadge = document.getElementById('adminBadge');
-                const catalogBar = document.getElementById('catalogBar');
-                const authText   = document.getElementById('authText');
-                const authIcon   = document.getElementById('authIcon');
-                if (isLoggedIn) {
-                    adminBadge.classList.remove('hidden');
-                    catalogBar.classList.remove('hidden');
-                    catalogBar.classList.add('flex');
-                    authText.innerText = 'CERRAR SESIÓN';
-                    authIcon.className = 'fa-solid fa-right-from-bracket';
-                } else {
-                    adminBadge.classList.add('hidden');
-                    catalogBar.classList.add('hidden');
-                    catalogBar.classList.remove('flex');
-                    authText.innerText = 'ACCESO ADMIN';
-                    authIcon.className = 'fa-solid fa-lock';
-                }
+            updateAdminUI(on) {
+                const badge = document.getElementById('adminBadge');
+                const bar = document.getElementById('catalogBar');
+                document.getElementById('authText').innerText = on ? 'CERRAR SESIÓN' : 'ACCESO ADMIN';
+                document.getElementById('authIcon').className = on ? 'fa-solid fa-right-from-bracket' : 'fa-solid fa-lock';
+                if (on) { badge.classList.remove('hidden'); bar.classList.remove('hidden'); bar.classList.add('flex'); }
+                else { badge.classList.add('hidden'); bar.classList.add('hidden'); bar.classList.remove('flex'); }
             }
 
             render() {
@@ -542,28 +390,26 @@
                     document.getElementById('contentArea').innerHTML = `
                         <div class="text-center py-24">
                             <div class="spinner"></div>
-                            <p class="font-tech text-xs text-gray-400 mt-4 uppercase tracking-widest">Sincronizando con GitHub...</p>
+                            <p class="font-tech text-xs text-gray-400 mt-4 uppercase tracking-widest">Sincronizando con la nube...</p>
                         </div>`;
                     return;
                 }
 
-                const urlParams = new URLSearchParams(window.location.search);
-                const targetId = urlParams.get('v');
+                const params = new URLSearchParams(window.location.search);
+                const id = params.get('v');
 
-                if (targetId) {
+                if (id) {
                     document.getElementById('catalogBar').classList.add('hidden');
                     document.getElementById('catalogBar').classList.remove('flex');
-                    this.renderSingleVehicleView(targetId);
+                    this.renderSingleVehicleView(id);
+                } else if (this.isAdmin) {
+                    document.getElementById('catalogBar').classList.remove('hidden');
+                    document.getElementById('catalogBar').classList.add('flex');
+                    this.renderVehicleList();
                 } else {
-                    if (this.isAdmin) {
-                        document.getElementById('catalogBar').classList.remove('hidden');
-                        document.getElementById('catalogBar').classList.add('flex');
-                        this.renderVehicleList();
-                    } else {
-                        document.getElementById('catalogBar').classList.add('hidden');
-                        document.getElementById('catalogBar').classList.remove('flex');
-                        this.renderAdminLoginGate();
-                    }
+                    document.getElementById('catalogBar').classList.add('hidden');
+                    document.getElementById('catalogBar').classList.remove('flex');
+                    this.renderAdminLoginGate();
                 }
             }
 
@@ -578,23 +424,20 @@
                     sessionStorage.removeItem('pobreJose_admin');
                     this.updateAdminUI(false);
                     this.handleHomeClick();
-                } else {
-                    this.handleHomeClick();
-                }
+                } else { this.handleHomeClick(); }
             }
 
             handleLoginSubmit(e) {
                 e.preventDefault();
-                const user = document.getElementById('loginUser').value.trim();
-                const pass = document.getElementById('loginPass').value.trim();
-                if (user === 'admin' && pass === 'admin') {
+                const u = document.getElementById('loginUser').value.trim();
+                const p = document.getElementById('loginPass').value.trim();
+                if (u === 'admin' && p === 'admin') {
                     this.isAdmin = true;
                     sessionStorage.setItem('pobreJose_admin', 'true');
                     this.updateAdminUI(true);
                     this.render();
                 } else {
-                    const errorEl = document.getElementById('loginError');
-                    if (errorEl) errorEl.classList.remove('hidden');
+                    document.getElementById('loginError')?.classList.remove('hidden');
                 }
             }
 
@@ -637,10 +480,10 @@
                     </div>`;
             }
 
-            renderVehicleList(vehiclesToRender = this.vehicles) {
-                const container = document.getElementById('contentArea');
-                if (!vehiclesToRender || vehiclesToRender.length === 0) {
-                    container.innerHTML = `
+            renderVehicleList(list = this.vehicles) {
+                const c = document.getElementById('contentArea');
+                if (!list || list.length === 0) {
+                    c.innerHTML = `
                         <div class="text-center py-16 bg-cyber-card/40 rounded-2xl border border-cyber-border">
                             <i class="fa-solid fa-car-rear text-5xl text-gray-600 mb-4"></i>
                             <h3 class="font-tech text-lg text-white uppercase">No hay vehículos registrados</h3>
@@ -650,7 +493,7 @@
                 }
 
                 let html = `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">`;
-                vehiclesToRender.forEach(v => {
+                list.forEach(v => {
                     html += `
                         <div class="bg-cyber-card border border-cyber-border hover:border-cyber-red/60 rounded-xl overflow-hidden transition-all duration-300 hover:shadow-neon-red flex flex-col justify-between group">
                             <div class="relative h-48 bg-cyber-dark overflow-hidden">
@@ -660,13 +503,13 @@
                                     <i class="fa-solid fa-id-card text-cyber-red mr-1"></i> ${this.esc(v.plate)}
                                 </div>
                                 <div class="absolute top-3 right-3 flex space-x-1">
-                                    <button onclick="app.generateQR('${v.id}')" title="Generar QR" class="w-8 h-8 rounded-full bg-cyber-dark/80 hover:bg-cyber-red text-white border border-cyber-border flex items-center justify-center transition">
+                                    <button onclick="app.generateQR('${v.id}')" class="w-8 h-8 rounded-full bg-cyber-dark/80 hover:bg-cyber-red text-white border border-cyber-border flex items-center justify-center">
                                         <i class="fa-solid fa-qrcode text-xs"></i>
                                     </button>
-                                    <button onclick="app.openVehicleModal('${v.id}')" title="Editar" class="w-8 h-8 rounded-full bg-cyber-dark/80 hover:bg-blue-600 text-white border border-cyber-border flex items-center justify-center transition">
+                                    <button onclick="app.openVehicleModal('${v.id}')" class="w-8 h-8 rounded-full bg-cyber-dark/80 hover:bg-blue-600 text-white border border-cyber-border flex items-center justify-center">
                                         <i class="fa-solid fa-pen text-xs"></i>
                                     </button>
-                                    <button onclick="app.deleteVehicle('${v.id}')" title="Eliminar" class="w-8 h-8 rounded-full bg-cyber-dark/80 hover:bg-red-600 text-white border border-cyber-border flex items-center justify-center transition">
+                                    <button onclick="app.deleteVehicle('${v.id}')" class="w-8 h-8 rounded-full bg-cyber-dark/80 hover:bg-red-600 text-white border border-cyber-border flex items-center justify-center">
                                         <i class="fa-solid fa-trash text-xs"></i>
                                     </button>
                                 </div>
@@ -678,7 +521,7 @@
                             <div class="p-4 space-y-3 flex-grow text-xs">
                                 <div class="flex justify-between items-center py-1.5 border-b border-cyber-border/40">
                                     <span class="text-gray-400 font-tech"><i class="fa-solid fa-gauge-high text-cyber-red mr-1"></i> Kilometraje:</span>
-                                    <span class="font-bold text-white font-mono">${Number(v.mileage || 0).toLocaleString()} KM</span>
+                                    <span class="font-bold text-white font-mono">${Number(v.mileage||0).toLocaleString()} KM</span>
                                 </div>
                                 <div class="py-1 border-b border-cyber-border/40">
                                     <span class="text-gray-400 font-tech block mb-0.5"><i class="fa-solid fa-oil-can text-cyber-red mr-1"></i> Cambio Aceite:</span>
@@ -693,10 +536,10 @@
                                     <span class="text-cyber-red font-bold">${this.esc(v.nextService) || 'Pendiente'}</span>
                                 </div>
                                 ${v.notes ? `
-                                    <div class="pt-1">
-                                        <span class="text-gray-400 font-tech block mb-0.5"><i class="fa-solid fa-note-sticky text-cyber-red mr-1"></i> Notas:</span>
-                                        <p class="text-gray-300 italic bg-cyber-dark/50 p-2 rounded border border-cyber-border/30 line-clamp-2">${this.esc(v.notes)}</p>
-                                    </div>` : ''}
+                                <div class="pt-1">
+                                    <span class="text-gray-400 font-tech block mb-0.5"><i class="fa-solid fa-note-sticky text-cyber-red mr-1"></i> Notas:</span>
+                                    <p class="text-gray-300 italic bg-cyber-dark/50 p-2 rounded border border-cyber-border/30 line-clamp-2">${this.esc(v.notes)}</p>
+                                </div>` : ''}
                             </div>
                             <div class="p-3 bg-cyber-dark/60 border-t border-cyber-border/60 flex justify-between items-center text-[10px] text-gray-400">
                                 <span>Atendido: ${this.esc(v.date) || 'Reciente'}</span>
@@ -707,44 +550,44 @@
                         </div>`;
                 });
                 html += `</div>`;
-                container.innerHTML = html;
+                c.innerHTML = html;
             }
 
             renderSingleVehicleView(id) {
-                const vehicle = this.vehicles.find(v => v.id === id);
-                const container = document.getElementById('contentArea');
-                if (!vehicle) {
-                    container.innerHTML = `
+                const v = this.vehicles.find(x => x.id === id);
+                const c = document.getElementById('contentArea');
+                if (!v) {
+                    c.innerHTML = `
                         <div class="text-center py-16 bg-cyber-card rounded-xl border border-cyber-red">
                             <i class="fa-solid fa-triangle-exclamation text-4xl text-cyber-red mb-3"></i>
                             <h2 class="font-tech text-xl text-white">Vehículo no encontrado</h2>
-                            <p class="text-xs text-gray-400 mt-1">El código QR o enlace ingresado es inválido, o el registro fue eliminado.</p>
+                            <p class="text-xs text-gray-400 mt-1">El código QR o enlace es inválido, o el registro fue eliminado.</p>
                         </div>`;
                     return;
                 }
-                container.innerHTML = `
+                c.innerHTML = `
                     <div class="max-w-3xl mx-auto bg-cyber-card border-2 border-cyber-red/80 rounded-2xl overflow-hidden shadow-neon-red-lg">
                         <div class="p-4 bg-cyber-dark border-b border-cyber-border flex justify-between items-center">
                             <span class="text-xs font-tech text-gray-400">
                                 <i class="fa-solid fa-shield-halved text-cyber-red mr-1"></i> FICHA TÉCNICA OFICIAL
                             </span>
                             ${this.isAdmin ? `
-                                <button onclick="app.openVehicleModal('${vehicle.id}')" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white font-tech text-xs rounded">
-                                    <i class="fa-solid fa-pen mr-1"></i> Editar Registro
-                                </button>` : ''}
+                            <button onclick="app.openVehicleModal('${v.id}')" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white font-tech text-xs rounded">
+                                <i class="fa-solid fa-pen mr-1"></i> Editar Registro
+                            </button>` : ''}
                         </div>
                         <div class="relative h-64 sm:h-80 bg-black">
-                            <img src="${vehicle.photo || 'https://placehold.co/800x500/161b22/ff1a3c?text=Vehiculo'}" class="w-full h-full object-cover">
+                            <img src="${v.photo || 'https://placehold.co/800x500/161b22/ff1a3c?text=Vehiculo'}" class="w-full h-full object-cover">
                             <div class="absolute inset-0 bg-gradient-to-t from-cyber-card via-black/40 to-transparent"></div>
                             <div class="absolute bottom-4 left-4 right-4 flex flex-col sm:flex-row justify-between sm:items-end gap-2">
                                 <div>
-                                    <span class="bg-cyber-red text-white font-tech font-bold text-sm px-3 py-1 rounded shadow">${this.esc(vehicle.plate)}</span>
-                                    <h2 class="font-tech text-2xl sm:text-3xl font-black text-white mt-2">${this.esc(vehicle.model)}</h2>
-                                    <p class="text-sm text-gray-300"><i class="fa-solid fa-user text-cyber-red mr-1"></i> Propietario: ${this.esc(vehicle.owner)}</p>
+                                    <span class="bg-cyber-red text-white font-tech font-bold text-sm px-3 py-1 rounded shadow">${this.esc(v.plate)}</span>
+                                    <h2 class="font-tech text-2xl sm:text-3xl font-black text-white mt-2">${this.esc(v.model)}</h2>
+                                    <p class="text-sm text-gray-300"><i class="fa-solid fa-user text-cyber-red mr-1"></i> Propietario: ${this.esc(v.owner)}</p>
                                 </div>
                                 <div class="bg-cyber-dark/90 border border-cyber-border p-3 rounded-lg text-right">
                                     <span class="text-[10px] text-gray-400 font-tech uppercase block">Kilometraje Actual</span>
-                                    <span class="font-tech text-xl text-cyber-red font-bold">${Number(vehicle.mileage || 0).toLocaleString()} KM</span>
+                                    <span class="font-tech text-xl text-cyber-red font-bold">${Number(v.mileage||0).toLocaleString()} KM</span>
                                 </div>
                             </div>
                         </div>
@@ -755,14 +598,14 @@
                                         <i class="fa-solid fa-oil-can text-lg"></i>
                                         <h4 class="font-tech font-bold text-sm text-white uppercase">Cambio de Aceite</h4>
                                     </div>
-                                    <p class="text-sm text-gray-200">${this.esc(vehicle.oilChange) || 'Sin registro'}</p>
+                                    <p class="text-sm text-gray-200">${this.esc(v.oilChange) || 'Sin registro'}</p>
                                 </div>
                                 <div class="bg-cyber-dark border border-cyber-border p-4 rounded-xl">
                                     <div class="flex items-center space-x-2 text-cyber-red mb-2">
                                         <i class="fa-solid fa-filter text-lg"></i>
                                         <h4 class="font-tech font-bold text-sm text-white uppercase">Filtros Reemplazados</h4>
                                     </div>
-                                    <p class="text-sm text-gray-200">${this.esc(vehicle.filters) || 'Sin registro'}</p>
+                                    <p class="text-sm text-gray-200">${this.esc(v.filters) || 'Sin registro'}</p>
                                 </div>
                             </div>
                             <div class="bg-cyber-dark border border-cyber-red/40 p-4 rounded-xl flex items-center justify-between">
@@ -772,18 +615,18 @@
                                     </div>
                                     <div>
                                         <h4 class="font-tech font-bold text-xs text-gray-400 uppercase">Próximo Mantenimiento</h4>
-                                        <p class="font-tech text-base text-cyber-red font-bold">${this.esc(vehicle.nextService) || 'No programado'}</p>
+                                        <p class="font-tech text-base text-cyber-red font-bold">${this.esc(v.nextService) || 'No programado'}</p>
                                     </div>
                                 </div>
-                                <span class="text-xs text-gray-400">Atendido: ${this.esc(vehicle.date) || 'N/A'}</span>
+                                <span class="text-xs text-gray-400">Atendido: ${this.esc(v.date) || 'N/A'}</span>
                             </div>
-                            ${vehicle.notes ? `
-                                <div class="bg-cyber-dark border border-cyber-border p-4 rounded-xl">
-                                    <h4 class="font-tech font-bold text-xs text-gray-400 uppercase mb-2">Observaciones Taller</h4>
-                                    <p class="text-sm text-gray-300 italic whitespace-pre-line">${this.esc(vehicle.notes)}</p>
-                                </div>` : ''}
+                            ${v.notes ? `
+                            <div class="bg-cyber-dark border border-cyber-border p-4 rounded-xl">
+                                <h4 class="font-tech font-bold text-xs text-gray-400 uppercase mb-2">Observaciones Taller</h4>
+                                <p class="text-sm text-gray-300 italic whitespace-pre-line">${this.esc(v.notes)}</p>
+                            </div>` : ''}
                             <div class="pt-4 border-t border-cyber-border flex justify-between items-center">
-                                <button onclick="app.generateQR('${vehicle.id}')" class="px-4 py-2 bg-cyber-dark border border-cyber-red text-white font-tech text-xs rounded hover:bg-cyber-red transition">
+                                <button onclick="app.generateQR('${v.id}')" class="px-4 py-2 bg-cyber-dark border border-cyber-red text-white font-tech text-xs rounded hover:bg-cyber-red transition">
                                     <i class="fa-solid fa-qrcode mr-1"></i> Ver Código QR
                                 </button>
                                 <span class="text-[10px] text-gray-500 font-tech">EL POBRE JOSÉ - TALLER MECÁNICO</span>
@@ -793,41 +636,40 @@
             }
 
             navigateToVehicle(id) {
-                const newUrl = `${window.location.pathname}?v=${id}`;
-                window.history.pushState({ vehicleId: id }, '', newUrl);
+                window.history.pushState({ vehicleId:id }, '', `${window.location.pathname}?v=${id}`);
                 this.render();
             }
 
             filterVehicles() {
-                const query = (document.getElementById('searchInput').value || '').toLowerCase();
-                const filtered = this.vehicles.filter(v =>
-                    (v.plate || '').toLowerCase().includes(query) ||
-                    (v.owner || '').toLowerCase().includes(query) ||
-                    (v.model || '').toLowerCase().includes(query)
+                const q = (document.getElementById('searchInput').value || '').toLowerCase();
+                const f = this.vehicles.filter(v =>
+                    (v.plate||'').toLowerCase().includes(q) ||
+                    (v.owner||'').toLowerCase().includes(q) ||
+                    (v.model||'').toLowerCase().includes(q)
                 );
-                this.renderVehicleList(filtered);
+                this.renderVehicleList(f);
             }
 
             openVehicleModal(id = null) {
                 const modal = document.getElementById('vehicleModal');
                 const title = document.getElementById('modalTitle');
                 if (id) {
-                    const vehicle = this.vehicles.find(v => v.id === id);
-                    if (!vehicle) return;
+                    const v = this.vehicles.find(x => x.id === id);
+                    if (!v) return;
                     title.innerText = 'Editar Registro de Vehículo';
-                    document.getElementById('vehicleId').value = vehicle.id;
-                    document.getElementById('vPlate').value = vehicle.plate || '';
-                    document.getElementById('vOwner').value = vehicle.owner || '';
-                    document.getElementById('vModel').value = vehicle.model || '';
-                    document.getElementById('vMileage').value = vehicle.mileage || '';
-                    document.getElementById('vOilChange').value = vehicle.oilChange || '';
-                    document.getElementById('vFilters').value = vehicle.filters || '';
-                    document.getElementById('vNextService').value = vehicle.nextService || '';
-                    document.getElementById('vDate').value = vehicle.date || '';
-                    document.getElementById('vNotes').value = vehicle.notes || '';
-                    if (vehicle.photo) {
-                        this.currentPhotoBase64 = vehicle.photo;
-                        document.getElementById('vPhotoPreview').src = vehicle.photo;
+                    document.getElementById('vehicleId').value = v.id;
+                    document.getElementById('vPlate').value = v.plate || '';
+                    document.getElementById('vOwner').value = v.owner || '';
+                    document.getElementById('vModel').value = v.model || '';
+                    document.getElementById('vMileage').value = v.mileage || '';
+                    document.getElementById('vOilChange').value = v.oilChange || '';
+                    document.getElementById('vFilters').value = v.filters || '';
+                    document.getElementById('vNextService').value = v.nextService || '';
+                    document.getElementById('vDate').value = v.date || '';
+                    document.getElementById('vNotes').value = v.notes || '';
+                    if (v.photo) {
+                        this.currentPhotoBase64 = v.photo;
+                        document.getElementById('vPhotoPreview').src = v.photo;
                         document.getElementById('vPhotoPreview').classList.remove('hidden');
                         document.getElementById('vPhotoPlaceholder').classList.add('hidden');
                     } else {
@@ -838,15 +680,8 @@
                 } else {
                     title.innerText = 'Registrar Nuevo Vehículo';
                     document.getElementById('vehicleId').value = '';
-                    document.getElementById('vPlate').value = '';
-                    document.getElementById('vOwner').value = '';
-                    document.getElementById('vModel').value = '';
-                    document.getElementById('vMileage').value = '';
-                    document.getElementById('vOilChange').value = '';
-                    document.getElementById('vFilters').value = '';
-                    document.getElementById('vNextService').value = '';
+                    ['vPlate','vOwner','vModel','vMileage','vOilChange','vFilters','vNextService','vNotes'].forEach(i => document.getElementById(i).value = '');
                     document.getElementById('vDate').value = new Date().toISOString().split('T')[0];
-                    document.getElementById('vNotes').value = '';
                     this.currentPhotoBase64 = '';
                     document.getElementById('vPhotoPreview').classList.add('hidden');
                     document.getElementById('vPhotoPlaceholder').classList.remove('hidden');
@@ -857,62 +692,56 @@
 
             closeVehicleModal() { document.getElementById('vehicleModal').classList.add('hidden'); }
 
-            async handlePhotoUpload(event) {
-                const file = event.target.files[0];
+            async handlePhotoUpload(e) {
+                const file = e.target.files[0];
                 if (!file) return;
                 try {
-                    const compressed = await this.compressImage(file, 900, 0.72);
-                    this.currentPhotoBase64 = compressed;
-                    document.getElementById('vPhotoPreview').src = compressed;
+                    const img = await this.compressImage(file, 900, 0.72);
+                    this.currentPhotoBase64 = img;
+                    document.getElementById('vPhotoPreview').src = img;
                     document.getElementById('vPhotoPreview').classList.remove('hidden');
                     document.getElementById('vPhotoPlaceholder').classList.add('hidden');
-                    const kb = Math.round(compressed.length * 0.75 / 1024);
-                    if (kb > 400) alert('La imagen pesa ~' + kb + ' KB. Recomendado < 300 KB para que el JSON no crezca demasiado.');
+                    const kb = Math.round(img.length * 0.75 / 1024);
+                    if (kb > 500) alert('La imagen pesa ~' + kb + ' KB. Considera una más liviana.');
                 } catch (err) {
-                    console.error(err);
-                    alert('No se pudo procesar la imagen.');
+                    console.error(err); alert('No se pudo procesar la imagen.');
                 }
             }
 
-            compressImage(file, maxWidth, quality) {
-                return new Promise((resolve, reject) => {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        const img = new Image();
-                        img.onload = () => {
-                            let { width, height } = img;
-                            if (width > maxWidth) {
-                                height = Math.round(height * maxWidth / width);
-                                width = maxWidth;
-                            }
-                            const canvas = document.createElement('canvas');
-                            canvas.width = width; canvas.height = height;
-                            const ctx = canvas.getContext('2d');
-                            ctx.fillStyle = '#ffffff';
-                            ctx.fillRect(0, 0, width, height);
-                            ctx.drawImage(img, 0, 0, width, height);
-                            resolve(canvas.toDataURL('image/jpeg', quality));
+            compressImage(file, maxW, q) {
+                return new Promise((res, rej) => {
+                    const r = new FileReader();
+                    r.onload = (e) => {
+                        const i = new Image();
+                        i.onload = () => {
+                            let { width, height } = i;
+                            if (width > maxW) { height = Math.round(height * maxW / width); width = maxW; }
+                            const cv = document.createElement('canvas');
+                            cv.width = width; cv.height = height;
+                            const cx = cv.getContext('2d');
+                            cx.fillStyle = '#fff'; cx.fillRect(0,0,width,height);
+                            cx.drawImage(i, 0, 0, width, height);
+                            res(cv.toDataURL('image/jpeg', q));
                         };
-                        img.onerror = reject;
-                        img.src = e.target.result;
+                        i.onerror = rej;
+                        i.src = e.target.result;
                     };
-                    reader.onerror = reject;
-                    reader.readAsDataURL(file);
+                    r.onerror = rej;
+                    r.readAsDataURL(file);
                 });
             }
 
             async saveVehicle(e) {
                 e.preventDefault();
                 const btn = document.getElementById('saveVehicleBtn');
-                const originalText = btn.innerHTML;
+                const orig = btn.innerHTML;
                 btn.disabled = true;
-                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i> Subiendo a GitHub...';
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i> Guardando...';
 
                 const id = document.getElementById('vehicleId').value || ('v_' + Date.now());
                 const existing = this.vehicles.find(v => v.id === id);
-
-                const vehicleData = {
-                    id: id,
+                const data = {
+                    id,
                     plate: document.getElementById('vPlate').value.toUpperCase().trim(),
                     owner: document.getElementById('vOwner').value.trim(),
                     model: document.getElementById('vModel').value.trim(),
@@ -927,55 +756,48 @@
                     updatedAt: Date.now()
                 };
 
-                // Actualizamos la lista local
-                const idx = this.vehicles.findIndex(v => v.id === id);
-                if (idx >= 0) this.vehicles[idx] = vehicleData;
-                else this.vehicles.unshift(vehicleData);
-
                 try {
-                    if (this.cloudEnabled) {
-                        await this.writeToGitHub(this.vehicles);
+                    if (this.cloudEnabled && this.dbRef) {
+                        await this.dbRef.child(id).set(data);
                     } else {
+                        const i = this.vehicles.findIndex(v => v.id === id);
+                        if (i >= 0) this.vehicles[i] = data; else this.vehicles.unshift(data);
                         localStorage.setItem(this.storageKey, JSON.stringify(this.vehicles));
+                        this.render();
                     }
                     this.closeVehicleModal();
-                    this.render();
                 } catch (err) {
                     console.error(err);
-                    alert('❌ Error al guardar en GitHub:\n\n' + err.message +
-                        '\n\nVerifica:\n• Que el token tenga permisos "Contents: Read and write".\n• Que el repo y la rama sean correctos.\n• Que data.json exista (o permiso para crearlo).');
+                    alert('❌ Error al guardar:\n' + err.message + '\n\nRevisa las reglas de tu Realtime Database.');
                 } finally {
                     btn.disabled = false;
-                    btn.innerHTML = originalText;
+                    btn.innerHTML = orig;
                 }
             }
 
             async deleteVehicle(id) {
-                if (!confirm('¿Está seguro de que desea eliminar este registro de vehículo?')) return;
-                this.vehicles = this.vehicles.filter(v => v.id !== id);
+                if (!confirm('¿Eliminar este registro?')) return;
                 try {
-                    if (this.cloudEnabled) {
-                        await this.writeToGitHub(this.vehicles);
+                    if (this.cloudEnabled && this.dbRef) {
+                        await this.dbRef.child(id).remove();
                     } else {
+                        this.vehicles = this.vehicles.filter(v => v.id !== id);
                         localStorage.setItem(this.storageKey, JSON.stringify(this.vehicles));
+                        this.render();
                     }
-                    this.render();
-                } catch (err) {
-                    console.error(err);
-                    alert('❌ Error al eliminar en GitHub: ' + err.message);
-                }
+                } catch (err) { alert('❌ Error: ' + err.message); }
             }
 
             generateQR(id) {
-                const vehicle = this.vehicles.find(v => v.id === id);
-                if (!vehicle) return;
+                const v = this.vehicles.find(x => x.id === id);
+                if (!v) return;
                 this.activeVehicleIdForQR = id;
-                document.getElementById('qrVehiclePlate').innerText = `PATENTE: ${vehicle.plate}`;
-                const qrUrl = this.getVehicleUrl(id);
-                const qrContainer = document.getElementById('qrcode');
-                qrContainer.innerHTML = '';
-                new QRCode(qrContainer, {
-                    text: qrUrl, width: 140, height: 140,
+                document.getElementById('qrVehiclePlate').innerText = `PATENTE: ${v.plate}`;
+                const url = this.getVehicleUrl(id);
+                const c = document.getElementById('qrcode');
+                c.innerHTML = '';
+                new QRCode(c, {
+                    text: url, width: 140, height: 140,
                     colorDark: '#000000', colorLight: '#ffffff',
                     correctLevel: QRCode.CorrectLevel.H
                 });
@@ -983,36 +805,27 @@
             }
 
             getVehicleUrl(id) {
-                const base = window.location.origin + window.location.pathname;
-                return `${base}?v=${id}`;
+                return window.location.origin + window.location.pathname + '?v=' + id;
             }
 
             closeQRModal() { document.getElementById('qrModal').classList.add('hidden'); }
 
             openVehicleInNewTab() {
-                if (this.activeVehicleIdForQR) {
-                    window.open(this.getVehicleUrl(this.activeVehicleIdForQR), '_blank');
-                }
+                if (this.activeVehicleIdForQR) window.open(this.getVehicleUrl(this.activeVehicleIdForQR), '_blank');
             }
 
             copyQRLink() {
                 if (!this.activeVehicleIdForQR) return;
-                const fullLink = this.getVehicleUrl(this.activeVehicleIdForQR);
-                const dummy = document.createElement('input');
-                document.body.appendChild(dummy);
-                dummy.value = fullLink;
-                dummy.select();
-                document.execCommand('copy');
-                document.body.removeChild(dummy);
-                alert('¡Enlace directo copiado al portapapeles!\n\n' + fullLink);
+                const link = this.getVehicleUrl(this.activeVehicleIdForQR);
+                const d = document.createElement('input');
+                document.body.appendChild(d); d.value = link; d.select();
+                document.execCommand('copy'); document.body.removeChild(d);
+                alert('¡Enlace copiado!\n\n' + link);
             }
 
-            esc(str) {
-                if (str === undefined || str === null) return '';
-                return String(str)
-                    .replace(/&/g, '&amp;').replace(/</g, '&lt;')
-                    .replace(/>/g, '&gt;').replace(/"/g, '&quot;')
-                    .replace(/'/g, '&#039;');
+            esc(s) {
+                if (s === undefined || s === null) return '';
+                return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
             }
         }
 
