@@ -229,8 +229,6 @@
 
     <!-- ============================================================
          ⚙️ CONFIGURACIÓN DE FIREBASE — ¡EDITA SOLO ESTAS LÍNEAS!
-         Los valores NO son secretos: Firebase los expone públicamente
-         por diseño. La seguridad se controla desde las REGLAS del servidor.
          ============================================================ -->
     <script>
         window.FIREBASE_CONFIG = {
@@ -243,8 +241,6 @@
             appId:             "1:214347478173:web:520e22b87b56635f799074"
         };
 
-        // 👉 Clave privada de taller: cambia esto por una frase única tuya.
-        //    Sirve para que tu carpeta dentro de la base de datos no sea adivinable.
         window.WORKSHOP_KEY = "el-pobre-jose-taller-2026-cambia-esto";
     </script>
 
@@ -259,6 +255,8 @@
                 this.ready = false;
                 this.dbRef = null;
                 this.storageKey = 'pobreJose_vehicles';
+                this.cloudMode = null;      // 👈 NUEVO: guarda el estado de la nube
+                this.cloudDetail = '';      // 👈 NUEVO: detalle del estado
             }
 
             init() {
@@ -305,8 +303,6 @@
 
                     this.dbRef = firebase.database().ref('talleres/' + window.WORKSHOP_KEY + '/vehiculos');
 
-                    // Escucha en tiempo real: cualquier cambio se refleja al instante
-                    // en TODOS los dispositivos abiertos.
                     this.dbRef.on('value', (snap) => {
                         const raw = snap.val() || {};
                         const list = Object.keys(raw).map(k => {
@@ -335,18 +331,33 @@
             }
 
             setStatus(mode, detail) {
+                this.cloudMode = mode;
+                this.cloudDetail = detail || '';
+                this.renderCloudStatus();
+            }
+
+            // 👇 NUEVO: solo dibuja el badge si el modo admin está activo
+            renderCloudStatus() {
                 const el = document.getElementById('cloudStatus');
                 if (!el) return;
-                el.classList.remove('hidden');
+
+                // Fuera del modo admin: siempre oculto
+                if (!this.isAdmin || !this.cloudMode) {
+                    el.classList.add('hidden');
+                    return;
+                }
+
                 const s = {
                     connecting: ['text-yellow-400','border-yellow-500/60','bg-yellow-500/10','fa-solid fa-cloud-arrow-up','CONECTANDO...'],
                     cloud:      ['text-green-400','border-green-500/60','bg-green-500/10','fa-solid fa-cloud','NUBE ACTIVA'],
                     local:      ['text-gray-400','border-gray-500/60','bg-gray-500/10','fa-solid fa-hard-drive','MODO LOCAL'],
                     error:      ['text-cyber-red','border-cyber-red','bg-cyber-red/10','fa-solid fa-triangle-exclamation','ERROR NUBE']
-                }[mode] || ['text-gray-400','border-gray-500/60','bg-gray-500/10','fa-solid fa-hard-drive','LOCAL'];
+                }[this.cloudMode] || ['text-gray-400','border-gray-500/60','bg-gray-500/10','fa-solid fa-hard-drive','LOCAL'];
+
                 el.className = `text-[10px] font-tech font-bold px-3 py-1 rounded-full border ${s[0]} ${s[1]} ${s[2]}`;
                 el.innerHTML = `<i class="${s[3]} mr-1"></i> ${s[4]}`;
-                el.title = detail || '';
+                el.title = this.cloudDetail;
+                el.classList.remove('hidden');
             }
 
             checkConfigWarning() {
@@ -379,8 +390,18 @@
                 const bar = document.getElementById('catalogBar');
                 document.getElementById('authText').innerText = on ? 'CERRAR SESIÓN' : 'ACCESO ADMIN';
                 document.getElementById('authIcon').className = on ? 'fa-solid fa-right-from-bracket' : 'fa-solid fa-lock';
-                if (on) { badge.classList.remove('hidden'); bar.classList.remove('hidden'); bar.classList.add('flex'); }
-                else { badge.classList.add('hidden'); bar.classList.add('hidden'); bar.classList.remove('flex'); }
+
+                if (on) {
+                    badge.classList.remove('hidden');
+                    bar.classList.remove('hidden');
+                    bar.classList.add('flex');
+                } else {
+                    badge.classList.add('hidden');
+                    bar.classList.add('hidden');
+                    bar.classList.remove('flex');
+                }
+
+                this.renderCloudStatus(); // 👈 NUEVO: muestra/oculta el badge según el modo
             }
 
             render() {
